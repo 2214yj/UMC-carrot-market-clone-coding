@@ -80,13 +80,13 @@ public class UserController {
     }
 
     /**
-     * 회원가입 API
+     * 회원가입 APIcd
      * [POST] /users
      * @return BaseResponse<PostUserRes>
      */
     // Body
     @ResponseBody
-    @PostMapping("")
+    @PostMapping("/signin")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
         if(postUserReq.getEmail() == null){
@@ -137,7 +137,7 @@ public class UserController {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             //같다면 유저네임 변경
-            PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getUserName());
+            PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getNickname());
             userService.modifyUserName(patchUserReq);
 
             String result = "";
@@ -146,6 +146,4 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
-
 }
