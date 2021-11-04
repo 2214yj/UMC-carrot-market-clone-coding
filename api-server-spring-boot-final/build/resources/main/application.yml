@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 9000  # 9000번 포트로 실행
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://database-1.cwlfftvmude1.ap-northeast-2.rds.amazonaws.com/capstone
+    url: jdbc:mysql://database-1.cdkhkdpxm0kr.ap-northeast-2.rds.amazonaws.com/UMC
     username: admin
-    password: capstone_nick12
+    password: umctest123
     driver-class-name: com.mysql.cj.jdbc.Driver
