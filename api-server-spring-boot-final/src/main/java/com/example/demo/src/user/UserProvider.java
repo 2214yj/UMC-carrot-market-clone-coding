@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
-
-//Provider : Read의 비즈니스 로직 처리
+/**
+ * Service란?
+ * Controller에 의해 호출되어 실제 비즈니스 로직과 트랜잭션을 처리: Read의 비즈니스 로직 처리
+ * 요청한 작업을 처리하는 관정을 하나의 작업으로 묶음
+ * dao를 호출하여 DB CRUD를 처리 후 Controller로 반환
+ */
 @Service
 public class UserProvider {
 

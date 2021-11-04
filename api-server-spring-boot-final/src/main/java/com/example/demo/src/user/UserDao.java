@@ -9,6 +9,11 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * DAO란?
+ * 데이터베이스 관련 작업을 전담하는 클래스
+ * 데이터베이스에 연결하여, 입력 , 수정, 삭제, 조회 등의 작업을 수행
+ */
 @Repository
 public class UserDao {
 
@@ -19,11 +24,7 @@ public class UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    /**
-     * DAO란?
-     * 데이터베이스 관련 작업을 전담하는 클래스
-     * 데이터베이스에 연결하여, 입력 , 수정, 삭제, 조회 등의 작업을 수행
-     */
+
 
     /**
      * DAO관련 함수코드의 전반부는 크게 String ~~~Query와 Object[] ~~~~Params, jdbcTemplate함수로 구성되어 있습니다.

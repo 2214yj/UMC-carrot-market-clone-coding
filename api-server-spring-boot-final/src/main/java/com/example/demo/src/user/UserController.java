@@ -15,6 +15,10 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.isRegexEmail;
 
+/**
+ * Controller란?
+ * 사용자의 Request를 전달받아 요청의 처리를 담당하는 Service, Prodiver 를 호출
+ */
 @RestController
 @RequestMapping("/app/users")
 public class UserController {
