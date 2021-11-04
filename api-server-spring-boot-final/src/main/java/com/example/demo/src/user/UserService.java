@@ -24,27 +24,28 @@ public class UserService {
 
     private final UserDao userDao;
     private final UserProvider userProvider;
-    private final JwtService jwtService;
+    private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
 
 
     @Autowired
     public UserService(UserDao userDao, UserProvider userProvider, JwtService jwtService) {
         this.userDao = userDao;
         this.userProvider = userProvider;
-        this.jwtService = jwtService;
+        this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
 
     }
 
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-        //중복
+        //중복 확인: 해당 이메일을 가진 유저가 있는지 확인합니다.
         if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
         }
 
         String pwd;
         try{
-            //암호화
+            // 암호화: 비밀번호를 보안을 위해 암호화시켜 DB에 저장합니다.
+            // ex) password123 -> dfhsjfkjdsnj4@!$!@chdsnjfwkenjfnsjfnjsd.fdsfaifsadjfjaf
             pwd = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postUserReq.getPassword());
             postUserReq.setPassword(pwd);
         } catch (Exception ignored) {
@@ -52,9 +53,13 @@ public class UserService {
         }
         try{
             int userIdx = userDao.createUser(postUserReq);
-            //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
+            return new PostUserRes(userIdx);
+
+//  *********** 해당 부분은 7주차 수업 후 주석해제하서 대체해서 사용해주세요! ***********
+//            //jwt 발급.
+//            String jwt = jwtService.createJwt(userIdx);
+//            return new PostUserRes(jwt,userIdx);
+//  *********************************************************************
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
