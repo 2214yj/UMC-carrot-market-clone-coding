@@ -70,10 +70,10 @@ public class UserDao {
 
     // 회원정보 변경
     public int modifyUserName(PatchUserReq patchUserReq){
-        String modifyUserNameQuery = "update User set nickname = ? where userIdx = ? ";
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickname(), patchUserReq.getUserIdx()};
+        String modifyUserNameQuery = "update User set nickname = ? where userIdx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
+        Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickname(), patchUserReq.getUserIdx()}; // 주입될 값들(nickname, userIdx) 순
 
-        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams); // 대응시켜 매핑시켜 쿼리 요청
     }
 
     public User getPwd(PostLoginReq postLoginReq){

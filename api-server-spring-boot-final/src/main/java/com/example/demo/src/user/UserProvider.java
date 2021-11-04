@@ -24,7 +24,7 @@ import static com.example.demo.config.BaseResponseStatus.*;
 public class UserProvider {
 
     private final UserDao userDao;
-    private final JwtService jwtService;
+    private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,7 +32,7 @@ public class UserProvider {
     @Autowired
     public UserProvider(UserDao userDao, JwtService jwtService) {
         this.userDao = userDao;
-        this.jwtService = jwtService;
+        this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
     }
 
 
@@ -47,8 +47,12 @@ public class UserProvider {
 
         if(postLoginReq.getPassword().equals(password)){
             int userIdx = userDao.getPwd(postLoginReq).getUserIdx();
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostLoginRes(userIdx,jwt);
+            return new PostLoginRes(userIdx);
+//  *********** 해당 부분은 7주차 - JWT 수업 후 주석해제 및 대체해주세요!  **************** //
+//            String jwt = jwtService.createJwt(userIdx);
+//            return new PostLoginRes(userIdx,jwt);
+//  **************************************************************************
+
         }
         else{
             throw new BaseException(FAILED_TO_LOGIN);
