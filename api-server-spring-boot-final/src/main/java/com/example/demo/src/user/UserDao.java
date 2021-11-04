@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
-@Repository
+@Repository //  [Persistence Layer에서 DAO를 명시하기 위해 사용]
+            //  [Persistence Layer]는 데이터베이스에 접근하는 계층
 public class UserDao {
 
     private JdbcTemplate jdbcTemplate;

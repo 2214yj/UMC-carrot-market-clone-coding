@@ -16,7 +16,8 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 
 //Provider : Read의 비즈니스 로직 처리
-@Service
+@Service    // [Business Layer에서 Service를 명시하기 위해서 사용] 비즈니스 로직이나 respository layer 호출하는 함수에 사용된다.
+            // [Business Layer]는 컨트롤러와 데이터 베이스를 연결
 public class UserProvider {
 
     private final UserDao userDao;
