@@ -5,8 +5,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Configuration
-@EnableWebSecurity  // SpringSecurity 사용을 위한 어노테이션 선언, CSRF 활성화
+@Configuration      // 스프링 설정 클래스를 선언하는 어노테이션
+@EnableWebSecurity  // SpringSecurity 사용을 위한 어노테이션, 기본적으로 CSRF 활성화
+// SpringSecurity란, Spring기반의 애플리케이션의 보안(인증, 권한, 인가 등)을 담당하는 Spring 하위 프레임워크
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * SpringSecurity 설정
