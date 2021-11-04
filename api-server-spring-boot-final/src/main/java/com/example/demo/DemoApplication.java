@@ -3,7 +3,9 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication  // SpringBoot의 가장 기본적인 설정 선언.
+// @Controller, @Service, @Repository 등의 Annotation 스캔 및 Bean 등록
+// 사전의 정의한 라이브러리들을 Bean 등록
 public class DemoApplication {
 
     public static void main(String[] args) {
