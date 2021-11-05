@@ -83,10 +83,10 @@ public class UserProvider {
         }
     }
 
-    //
-    public List<GetUserRes> getUsersByEmail(String email) throws BaseException {
+    // 해당 nickname을 갖는 User들의 정보 조회
+    public List<GetUserRes> getUsersByNickname(String nickname) throws BaseException {
         try {
-            List<GetUserRes> getUsersRes = userDao.getUsersByEmail(email);
+            List<GetUserRes> getUsersRes = userDao.getUsersByEmail(nickname);
             return getUsersRes;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
@@ -94,6 +94,7 @@ public class UserProvider {
     }
 
 
+    // 해당 userIdx를 갖는 User의 정보 조회
     public GetUserRes getUser(int userIdx) throws BaseException {
         try {
             GetUserRes getUserRes = userDao.getUser(userIdx);
