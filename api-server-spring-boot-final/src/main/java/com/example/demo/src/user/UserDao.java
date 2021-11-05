@@ -76,25 +76,25 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams); // 대응시켜 매핑시켜 쿼리 요청
     }
 
-    public User getPwd(PostLoginReq postLoginReq){
-        String getPwdQuery = "select userIdx, password,email,userName,ID from User where email = ?";
-        String getPwdParams = postLoginReq.getEmail();
+    public GetUserRes getPwd(PostLoginReq postLoginReq){
+        String getPwdQuery = "select userIdx, password,email,nickname from User where email = ?"; // 해당 email을 만족하는 User의 정보들을 조회한다.
+        String getPwdParams = postLoginReq.getEmail(); // 주입될 email값을 클라이언트의 요청에서 주어진 정보를 통해 가져온다.
 
         return this.jdbcTemplate.queryForObject(getPwdQuery,
-                (rs,rowNum)-> new User(
+                (rs,rowNum)-> new GetUserRes(
                         rs.getInt("userIdx"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("nickname")
                 ),
                 getPwdParams
-                );
+                ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
 
-    public List<GetUserRes> getUsers(){
+    public List<GetUsersRes> getUsers(){
         String getUsersQuery = "select * from User";
         return this.jdbcTemplate.query(getUsersQuery,
-                (rs,rowNum) -> new GetUserRes(
+                (rs,rowNum) -> new GetUsersRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
@@ -102,10 +102,10 @@ public class UserDao {
         );
     }
 
-    public List<GetUserRes> getUsersByEmail(String email){
+    public GetUserRes getUsersByEmail(String email){
         String getUsersByEmailQuery = "select * from User where email =?";
         String getUsersByEmailParams = email;
-        return this.jdbcTemplate.query(getUsersByEmailQuery,
+        return this.jdbcTemplate.queryForObject(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
