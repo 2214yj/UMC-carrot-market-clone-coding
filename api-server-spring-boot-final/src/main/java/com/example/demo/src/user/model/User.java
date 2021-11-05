@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor // 해당 클래스의 모든 멤버 변수(userIdx, nickname, email, password)를 받는 생성자를 생성
 /**
  * Res.java: From Server To Client
- * 하나의 회원정보 조회 요청(Get Request)의 결과(Respone)를 보여주는 데이터의 형태
+ *
  */
 public class User {
     private int userIdx;

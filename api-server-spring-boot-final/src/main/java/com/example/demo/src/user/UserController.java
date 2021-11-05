@@ -49,9 +49,8 @@ public class UserController {
     }
 
     /**
-     * 회원가입 APIcd
+     * 회원가입 API
      * [POST] /users
-     * @return BaseResponse<PostUserRes>
      */
     // Body
     @ResponseBody
