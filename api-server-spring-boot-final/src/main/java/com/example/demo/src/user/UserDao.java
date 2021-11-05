@@ -30,7 +30,7 @@ public class UserDao {
      * Query부분은 DB에 SQL요청을 할 쿼리문을 의미하는데, 대부분의 경우 동적 쿼리(실행할 때 값이 주입되어야 하는 쿼리) 형태입니다.
      * 그래서 Query의 동적 쿼리에 입력되어야 할 값들이 필요한데 그것이 Params부분입니다.
      * Params부분은 클라이언트의 요청에서 제공하는 정보(~~~~Req.java에 있는 정보)로 부터 getXXX를 통해 값을 가져옵니다. ex) getEmail -> email값을 가져옵니다.
-     *      Notice! get과 get의 대상은 대문자로 구분됩니다. ex) item -> getItem, password -> getPassword, email -> getEmail
+     *      Notice! get과 get의 대상은 카멜케이스로 작성됩니다. ex) item -> getItem, password -> getPassword, email -> getEmail, userIdx -> getUserIdx
      * 그 다음 GET, POST, PATCH 메소드에 따라 jabcTemplate의 적절한 함수(queryForObject, query, update)를 실행시킵니다(DB요청이 일어납니다.).
      *      Notice!
      *      POST, PATCH의 경우 jdbcTemplate.update
@@ -45,6 +45,12 @@ public class UserDao {
      * ex) return this.jdbcTemplate.query( ~~~~ ) -> ~~~~쿼리문을 통해 얻은 결과를 반환합니다.
      */
 
+    /**
+     * 참고 링크
+     * https://jaehoney.tistory.com/34 -> JdbcTemplate 관련 함수에 대한 설명
+     * https://velog.io/@seculoper235/RowMapper%EC%97%90-%EB%8C%80%ED%95%B4 -> RowMapper에 대한 설명
+     */
+
     // 회원가입
     public int createUser(PostUserReq postUserReq) {
         String createUserQuery = "insert into User (email, password, nickname) VALUES (?,?,?)"; // 실행될 동적 쿼리문
@@ -54,7 +60,7 @@ public class UserDao {
         // 즉 DB의 User Table에 (email, password, nickname)값을 가지는 유저 데이터를 삽입(생성)한다.
 
         String lastInserIdQuery = "select last_insert_id()"; // 가장 마지막에 삽입된(생성된) id값은 가져온다.
-        return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class); // 해당 쿼리문의 결과 마지막으로 삽인된 유저의 idx번호를 반환한다.
+        return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class); // 해당 쿼리문의 결과 마지막으로 삽인된 유저의 userIdx번호를 반환한다.
     }
 
     // 이메일 확인
@@ -85,11 +91,12 @@ public class UserDao {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("nickname")
-                ),
+                ), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
                 getPwdParams
         ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
 
+    // User 테이블에 존재하는 전체 유저들의 정보 조회
     public List<GetUserRes> getUsers() {
         String getUsersQuery = "select * from User"; //User 테이블에 존재하는 모든 회원들의 정보를 조회하는 쿼리
         return this.jdbcTemplate.query(getUsersQuery,
@@ -97,31 +104,33 @@ public class UserDao {
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
-                        rs.getString("password"))
+                        rs.getString("password")) // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
         ); // 복수개의 회원정보들을 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보)의 결과 반환(동적쿼리가 아니므로 Parmas부분이 없음)
     }
 
-    public List<GetUserRes> getUsersByEmail(String email) {
-        String getUsersByEmailQuery = "select * from User where email =?"; //
+    // 해당 Email을 만족하는 유저 조회
+    public GetUserRes getUsersByEmail(String email) {
+        String getUsersByEmailQuery = "select * from User where email =?"; // 해당 이메일을 만족하는 유저를 조회하는 쿼리문
         String getUsersByEmailParams = email;
-        return this.jdbcTemplate.query(getUsersByEmailQuery,
+        return this.jdbcTemplate.queryForObject(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getString("password")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
                 getUsersByEmailParams);
     }
 
+    // 해당 userIdx를 갖는 유저조회
     public GetUserRes getUser(int userIdx) {
-        String getUserQuery = "select * from User where userIdx = ?";
+        String getUserQuery = "select * from User where userIdx = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
         int getUserParams = userIdx;
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getString("password")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
                 getUserParams);
     }
 }
