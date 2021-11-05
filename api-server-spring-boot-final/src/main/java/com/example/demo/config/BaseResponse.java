@@ -11,7 +11,7 @@ import static com.example.demo.config.BaseResponseStatus.SUCCESS;
 @Getter
 @AllArgsConstructor
 @JsonPropertyOrder({"isSuccess", "code", "message", "result"})
-public class BaseResponse<T> {//BaseResponse 객체를 사용할때 성공,실패 경우
+public class BaseResponse<T> {//BaseResponse 객체를 사용할때 성공, 실패 경우
     @JsonProperty("isSuccess")
     private final Boolean isSuccess;
     private final String message;
