@@ -27,7 +27,7 @@ public class UserDao {
 
 
     /**
-     * DAO관련 함수코드의 전반부는 크게 String ~~~Query와 Object[] ~~~~Params, jdbcTemplate함수로 구성되어 있습니다.
+     * DAO관련 함수코드의 전반부는 크게 String ~~~Query와 Object[] ~~~~Params, jdbcTemplate함수로 구성되어 있습니다.(보통은 동적 쿼리문이지만, 동적쿼리가 아닐 경우, Params부분은 없어도 됩니다.)
      * Query부분은 DB에 SQL요청을 할 쿼리문을 의미하는데, 대부분의 경우 동적 쿼리(실행할 때 값이 주입되어야 하는 쿼리) 형태입니다.
      * 그래서 Query의 동적 쿼리에 입력되어야 할 값들이 필요한데 그것이 Params부분입니다.
      * Params부분은 클라이언트의 요청에서 제공하는 정보(~~~~Req.java에 있는 정보)로 부터 getXXX를 통해 값을 가져옵니다. ex) getEmail -> email값을 가져옵니다.
@@ -76,6 +76,7 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams); // 대응시켜 매핑시켜 쿼리 요청
     }
 
+
     public GetUserRes getPwd(PostLoginReq postLoginReq){
         String getPwdQuery = "select userIdx, password,email,nickname from User where email = ?"; // 해당 email을 만족하는 User의 정보들을 조회한다.
         String getPwdParams = postLoginReq.getEmail(); // 주입될 email값을 클라이언트의 요청에서 주어진 정보를 통해 가져온다.
@@ -92,18 +93,18 @@ public class UserDao {
     }
 
     public List<GetUsersRes> getUsers(){
-        String getUsersQuery = "select * from User";
+        String getUsersQuery = "select * from User"; //User 테이블에 존재하는 모든 회원들의 정보를 조회하는 쿼리
         return this.jdbcTemplate.query(getUsersQuery,
                 (rs,rowNum) -> new GetUsersRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
                         rs.getString("password"))
-        );
+        ); // 복수개의 회원정보들을 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보)의 결과 반환(동적쿼리가 아니므로 Parmas부분이 없음)
     }
 
     public GetUserRes getUsersByEmail(String email){
-        String getUsersByEmailQuery = "select * from User where email =?";
+        String getUsersByEmailQuery = "select * from User where email =?"; //
         String getUsersByEmailParams = email;
         return this.jdbcTemplate.queryForObject(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
@@ -125,5 +126,4 @@ public class UserDao {
                         rs.getString("password")),
                 getUserParams);
     }
-
 }
