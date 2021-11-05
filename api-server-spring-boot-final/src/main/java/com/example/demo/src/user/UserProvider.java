@@ -23,20 +23,23 @@ import static com.example.demo.config.BaseResponseStatus.*;
  */
 public class UserProvider {
 
+
+    // *********************** 동작에 있어 필요한 요소들을 불러옵니다. *************************
     private final UserDao userDao;
     private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
+    @Autowired //readme 참고
     public UserProvider(UserDao userDao, JwtService jwtService) {
         this.userDao = userDao;
         this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
     }
+    // ******************************************************************************
 
 
-    // 로그인을 하기 위한 password 검사
+    // 로그인(password 검사)
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException {
         User user = userDao.getPwd(postLoginReq);
         String password;

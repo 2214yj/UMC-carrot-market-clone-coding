@@ -18,12 +18,15 @@ import java.util.List;
  */
 public class UserDao {
 
+    // *********************** 동작에 있어 필요한 요소들을 불러옵니다. *************************
+
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
+    @Autowired //readme 참고
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+    // ******************************************************************************
 
     /**
      * DAO관련 함수코드의 전반부는 크게 String ~~~Query와 Object[] ~~~~Params, jdbcTemplate함수로 구성되어 있습니다.(보통은 동적 쿼리문이지만, 동적쿼리가 아닐 경우, Params부분은 없어도 됩니다.)
