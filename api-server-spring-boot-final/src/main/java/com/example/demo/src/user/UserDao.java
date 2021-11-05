@@ -105,20 +105,22 @@ public class UserDao {
                         rs.getString("nickname"),
                         rs.getString("Email"),
                         rs.getString("password")) // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
-        ); // 복수개의 회원정보들을 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보)의 결과 반환(동적쿼리가 아니므로 Parmas부분이 없음)
+        ); // 복수개의 회원정보들을 얻기 위해 jdbcTemplate 함수(Query, 객체 매핑 정보)의 결과 반환(동적쿼리가 아니므로 Parmas부분이 없음)
     }
 
     // 해당 Email을 만족하는 유저 조회
-    public GetUserRes getUsersByEmail(String email) {
+    public List<GetUserRes> getUsersByEmail(String email) {
         String getUsersByEmailQuery = "select * from User where email =?"; // 해당 이메일을 만족하는 유저를 조회하는 쿼리문
         String getUsersByEmailParams = email;
-        return this.jdbcTemplate.queryForObject(getUsersByEmailQuery,
+        return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("userIdx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
                         rs.getString("password")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
-                getUsersByEmailParams); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+                getUsersByEmailParams); // 이메일을 만족하는 모든 User 정보를 얻기 위 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+        // Notice! 이메일은 고유한데 왜 복수개의 User 정보를 가야와야 하나요?
+        // 맞습니다. 사실 같은 Email를 갖는 복수의 유저는 존재할 수 없습니다. 다만 해당
     }
 
     // 해당 userIdx를 갖는 유저조회
