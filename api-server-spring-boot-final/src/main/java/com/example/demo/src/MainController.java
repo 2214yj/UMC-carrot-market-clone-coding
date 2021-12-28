@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class MainController {
-    @GetMapping(value = "/")
+    @GetMapping(value = "/app/main")
     public String main() {
         return "main 화면 접속 성공";
     }

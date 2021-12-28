@@ -79,6 +79,7 @@ public class UserProvider {
             List<GetUserRes> getUserRes = userDao.getUsers();
             return getUserRes;
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -89,6 +90,7 @@ public class UserProvider {
             List<GetUserRes> getUsersRes = userDao.getUsersByNickname(nickname);
             return getUsersRes;
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -100,6 +102,7 @@ public class UserProvider {
             GetUserRes getUserRes = userDao.getUser(userIdx);
             return getUserRes;
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }

@@ -74,6 +74,7 @@ public class UserController {
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
         } catch (BaseException exception) {
+            //exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
     }
@@ -123,6 +124,7 @@ public class UserController {
             List<GetUserRes> getUsersRes = userProvider.getUsersByNickname(nickname);
             return new BaseResponse<>(getUsersRes);
         } catch (BaseException exception) {
+            exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
     }
@@ -147,6 +149,7 @@ public class UserController {
             GetUserRes getUserRes = userProvider.getUser(userIdx);
             return new BaseResponse<>(getUserRes);
         } catch (BaseException exception) {
+            exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
 
@@ -161,7 +164,7 @@ public class UserController {
     public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user) {
         try {
 /**
-  *********** 해당 부분은 7주차 - JWT 수업 후 주석해체 해주세요!  ****************
+  *********** 해당 부분은 7주차 - JWT 수업 후 주석해체 해주세요!  ****************/
             //jwt에서 idx 추출.
             int userIdxByJwt = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
@@ -169,7 +172,7 @@ public class UserController {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             //같다면 유저네임 변경
-  **************************************************************************
+  /**************************************************************************
  */
             PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickname());
             userService.modifyUserName(patchUserReq);
@@ -177,6 +180,7 @@ public class UserController {
             String result = "회원정보가 수정되었습니다.";
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
+            exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
     }
