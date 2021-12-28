@@ -23,4 +23,6 @@ public class UserEntity extends BaseEntity{
 
     private String nickname;
 
+    private String address;
+
 }

@@ -74,7 +74,7 @@ public class UserController {
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
         } catch (BaseException exception) {
-            //exception.printStackTrace();
+            exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
     }
@@ -174,7 +174,7 @@ public class UserController {
             //같다면 유저네임 변경
   /**************************************************************************
  */
-            PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickname());
+            PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickname(), user.getAddress());
             userService.modifyUserName(patchUserReq);
 
             String result = "회원정보가 수정되었습니다.";
