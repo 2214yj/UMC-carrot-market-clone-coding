@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
@@ -100,6 +102,73 @@ public class TransactionDao {
 
         return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
     }
+
+    public Page<GetSearchTranRes> getSearchAddress(String searchQuery, Pageable pageable) {
+        Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
+        Object[] getQueryParams = {"%"+searchQuery+"%","SELL"};
+        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * FROM Transaction where address like ? and sell_status = ? ORDER BY " + order.getProperty() + " "
+                        + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
+                (rs, rowNum) -> new GetSearchTranRes(
+                        rs.getInt("transaction_id"),
+                        rs.getString("title"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("rep_img"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at"),
+                        rs.getString("address"))
+                ,getQueryParams
+        );
+
+        int count =  jdbcTemplate.queryForObject("SELECT count(*) FROM Transaction where address like ? and sell_status = ?", Integer.class,getQueryParams);
+        return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
+    }
+
+    public Page<GetSearchTranRes> getSearchCategory(String searchQuery, Pageable pageable) {
+        Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
+        Object[] getQueryParams = {"%"+searchQuery+"%","SELL"};
+        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * FROM Transaction where category like ? and sell_status = ? ORDER BY " + order.getProperty() + " "
+                        + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
+                (rs, rowNum) -> new GetSearchTranRes(
+                        rs.getInt("transaction_id"),
+                        rs.getString("title"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("rep_img"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at"),
+                        rs.getString("address"))
+                ,getQueryParams
+        );
+
+        int count =  jdbcTemplate.queryForObject("SELECT count(*) FROM Transaction where category like ? and sell_status = ?", Integer.class,getQueryParams);
+        return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
+    }
+
+    public Page<GetSearchTranRes> getSearchTitle(String searchQuery, Pageable pageable) {
+        Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
+        Object[] getQueryParams = {"%"+searchQuery+"%","SELL"};
+        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * FROM Transaction where title like ? and sell_status = ? ORDER BY " + order.getProperty() + " "
+                        + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
+                (rs, rowNum) -> new GetSearchTranRes(
+                        rs.getInt("transaction_id"),
+                        rs.getString("title"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("rep_img"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at"),
+                        rs.getString("address"))
+                ,getQueryParams
+        );
+
+        int count =  jdbcTemplate.queryForObject("SELECT count(*) FROM Transaction where title like ? and sell_status = ?", Integer.class,getQueryParams);
+        return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
+    }
+
+//    //판매 상태 수정
+//    @ResponseBody
+//    @PatchMapping()
 
 }
 

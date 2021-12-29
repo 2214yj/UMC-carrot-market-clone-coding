@@ -44,8 +44,8 @@ com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
 com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
-com/example/demo/src/transaction/TransactionService.java
- com.example.demo.src.transaction.TransactionService
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/entity/PostImageEntity.java
@@ -74,17 +74,17 @@ com/example/demo/src/user/model/GetUserRes.java
  com.example.demo.src.user.model.GetUserRes
 com/example/demo/src/transaction/model/GetTranRes.java
  com.example.demo.src.transaction.model.GetTranRes
-com/example/demo/src/transaction/TransactionProvider.java
- com.example.demo.src.transaction.TransactionProvider
+com/example/demo/src/entity/TransactionImageEntity.java
+ com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
-com/example/demo/src/entity/TransactionImageEntity.java
- com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/src/transaction/TransactionDao.java
  com.example.demo.src.transaction.TransactionDao
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
+com/example/demo/src/transaction/TransactionService.java
+ com.example.demo.src.transaction.TransactionService
+com/example/demo/src/transaction/TransactionProvider.java
+ com.example.demo.src.transaction.TransactionProvider
 com/example/demo/src/transaction/TransanctionController.java
  com.example.demo.src.transaction.TransanctionController

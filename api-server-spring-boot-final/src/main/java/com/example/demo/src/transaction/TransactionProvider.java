@@ -44,4 +44,37 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    //주소로 검색
+    public Page<GetSearchTranRes> getSearchAddress(String searchQuery, Pageable pageable) throws BaseException {
+        try {
+            Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchAddress(searchQuery,pageable);
+            return getSearchTranResList;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    //카테고리로 검색
+    public Page<GetSearchTranRes> getSearchCategory(String searchQuery, Pageable pageable) throws BaseException {
+        try {
+            Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchCategory(searchQuery,pageable);
+            return getSearchTranResList;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    //title,content로 검색
+    public Page<GetSearchTranRes> getSearchTitle(String searchQuery, Pageable pageable) throws BaseException {
+        try {
+            Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchTitle(searchQuery,pageable);
+            return getSearchTranResList;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

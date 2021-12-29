@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import static com.example.demo.config.BaseResponseStatus.*;
 import com.example.demo.config.BaseException;
@@ -72,6 +73,44 @@ public class TransanctionController {
         }catch(BaseException exception){
             exception.printStackTrace();
             return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //검색
+    @ResponseBody
+    @GetMapping("/search")
+    public BaseResponse<Page<GetSearchTranRes>> getTransactions(@RequestParam(value = "searchType")int searchType,
+                                                                @RequestParam(value = "searchQuery", required = false, defaultValue = "")String searchQuery,
+                                                                @RequestParam(value = "sortType",required = false, defaultValue = "transaction_id")String sortType,
+                                                                @RequestParam(value = "sort",required = false, defaultValue = "asc")String sort
+                                                                ){
+        try{
+            Pageable pageable;
+            if(sort.equals("desc"))
+                pageable = PageRequest.of( 0,5,Sort.by(sortType).descending());
+            else
+                pageable = PageRequest.of( 0,5,Sort.by(sortType).ascending());
+            Page<GetSearchTranRes> getSearchTranResList;
+            switch(searchType){
+                case 1:
+                    //주소 검색
+                    getSearchTranResList = transactionProvider.getSearchAddress(searchQuery,pageable);
+                    break;
+                case 2:
+                    //카테고리 검색
+                    getSearchTranResList = transactionProvider.getSearchCategory(searchQuery,pageable);
+                    break;
+                case 3:
+                    //제목 검색
+                    getSearchTranResList = transactionProvider.getSearchTitle(searchQuery,pageable);
+                    break;
+                default:
+                    getSearchTranResList = null;
+            }
+            return new BaseResponse<>(getSearchTranResList);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>((exception.getStatus()));
         }
     }
 }
