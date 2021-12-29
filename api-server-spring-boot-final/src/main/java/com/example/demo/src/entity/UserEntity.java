@@ -2,13 +2,14 @@ package com.example.demo.src.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@ToString
 @Table(name = "user")
 public class UserEntity extends BaseEntity{
     @Id

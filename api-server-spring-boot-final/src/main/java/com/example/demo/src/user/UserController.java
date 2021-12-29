@@ -75,7 +75,7 @@ public class UserController {
             return new BaseResponse<>(postUserRes);
         } catch (BaseException exception) {
             exception.printStackTrace();
-            return new BaseResponse<>((exception.getStatus()));
+            return new BaseResponse<>(exception.getStatus());
         }
     }
 
@@ -149,7 +149,7 @@ public class UserController {
             return new BaseResponse<>(getUserRes);
         } catch (BaseException exception) {
             exception.printStackTrace();
-            return new BaseResponse<>((exception.getStatus()));
+            return new BaseResponse<>(exception.getStatus());
         }
 
     }
@@ -201,7 +201,7 @@ public class UserController {
 
         } catch (BaseException exception) {
             exception.printStackTrace();
-            return new BaseResponse<>((exception.getStatus()));
+            return new BaseResponse<>(exception.getStatus());
         }
 
 

@@ -79,13 +79,10 @@ public class UserDao {
 
     // 회원정보 변경
     public int modifyUserName(PatchUserReq patchUserReq) {
-        String modifyUserNameQuery = "update User set nickname = ? where user_idx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickname(), patchUserReq.getUserIdx()}; // 주입될 값들(nickname, userIdx) 순
+        String modifyUserNameQuery = "update User set nickname = ?,updated_at = ?,address = ? where user_idx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
+        Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickname(), LocalDateTime.now(), patchUserReq.getAddress(), patchUserReq.getUserIdx()}; // 주입될 값들(nickname, userIdx) 순
         int result1 = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
-        modifyUserNameQuery = "update User set address = ? where user_idx = ? ";
-        modifyUserNameParams = new Object[]{patchUserReq.getAddress(), patchUserReq.getUserIdx()};
-        int result2 = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
-        return result1 & result2;
+        return result1;
     }
 
 
@@ -111,7 +108,7 @@ public class UserDao {
         String getUsersQuery = "select * from User"; //User 테이블에 존재하는 모든 회원들의 정보를 조회하는 쿼리
         return this.jdbcTemplate.query(getUsersQuery,
                 (rs, rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
+                        rs.getInt("user_Idx"),
                         rs.getString("nickname"),
                         rs.getString("Email"),
                         rs.getString("password"),

@@ -27,6 +27,15 @@ public class TransactionEntity extends BaseEntity{
 
     private String price;
 
+    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private SellStatus sellStatus;
+
+    private String repImg;
+
+    private String address;
+
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity User;
