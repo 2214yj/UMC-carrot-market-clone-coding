@@ -185,6 +185,7 @@ public class UserController {
     }
 
     //회원 삭제
+    @ResponseBody
     @DeleteMapping("/delete/{userIdx}")
     public BaseResponse<String> deleteUser(@PathVariable("userIdx") int userIdx) {
         try {
@@ -202,6 +203,7 @@ public class UserController {
             exception.printStackTrace();
             return new BaseResponse<>((exception.getStatus()));
         }
+
 
     }
 }
