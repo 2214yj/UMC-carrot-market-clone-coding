@@ -89,6 +89,8 @@ public class UserController {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
+            if(!userProvider.getUserStatus(postLoginReq.getEmail()))
+                return new BaseResponse<>(INVALID_USER_DELETED);
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception) {
@@ -100,9 +102,9 @@ public class UserController {
     /**
      * 모든 회원들의  조회 API
      * [GET] /users
-     *
+     * <p>
      * 또는
-     *
+     * <p>
      * 해당 닉네임을 같는 유저들의 정보 조회 API
      * [GET] /users? NickName=
      */
@@ -128,12 +130,9 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-    /**
-
-
-
 
     /**
+     * /**
      * 회원 1명 조회 API
      * [GET] /users/:userIdx
      */
@@ -164,16 +163,16 @@ public class UserController {
     public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user) {
         try {
 /**
-  *********** 해당 부분은 7주차 - JWT 수업 후 주석해체 해주세요!  ****************/
+ *********** 해당 부분은 7주차 - JWT 수업 후 주석해체 해주세요!  ****************/
             //jwt에서 idx 추출.
             int userIdxByJwt = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
-            if(userIdx != userIdxByJwt){
+            if (userIdx != userIdxByJwt) {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             //같다면 유저네임 변경
-  /**************************************************************************
- */
+            /**************************************************************************
+             */
             PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickname(), user.getAddress());
             userService.modifyUserName(patchUserReq);
 
@@ -184,4 +183,28 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    //회원 삭제
+    @DeleteMapping("/delete/{userIdx}")
+    public BaseResponse<String> deleteUser(@PathVariable("userIdx") int userIdx) {
+        try {
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if (userIdx != userIdxByJwt) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            userService.deleteUser(userIdx);
+            String result = "회원정보가 삭제되었습니다.";
+            return new BaseResponse<>(result);
+
+        } catch (BaseException exception) {
+            exception.printStackTrace();
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
 }
+
+
+

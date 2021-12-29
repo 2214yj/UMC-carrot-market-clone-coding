@@ -1,12 +1,14 @@
 package com.example.demo.src.user;
 
 
+import com.example.demo.src.entity.Status;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository //  [Persistence Layer에서 DAO를 명시하기 위해 사용]
@@ -56,8 +58,8 @@ public class UserDao {
 
     // 회원가입
     public int createUser(PostUserReq postUserReq) {
-        String createUserQuery = "insert into User (email, password, nickname, address) VALUES (?,?,?,?)"; // 실행될 동적 쿼리문
-        Object[] createUserParams = new Object[]{postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getNickname(), postUserReq.getAddress()}; // 동적 쿼리의 ?부분에 주입될 값
+        String createUserQuery = "insert into User (email, password, nickname, address, status, created_At) VALUES (?,?,?,?,?,?)"; // 실행될 동적 쿼리문
+        Object[] createUserParams = new Object[]{postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getNickname(), postUserReq.getAddress(), "A", LocalDateTime.now()}; // 동적 쿼리의 ?부분에 주입될 값
         this.jdbcTemplate.update(createUserQuery, createUserParams);
         // email -> postUserReq.getEmail(), password -> postUserReq.getPassword(), nickname -> postUserReq.getNickname() 로 매핑(대응)시킨다음 쿼리문을 실행한다.
         // 즉 DB의 User Table에 (email, password, nickname)값을 가지는 유저 데이터를 삽입(생성)한다.
@@ -144,4 +146,26 @@ public class UserDao {
                         rs.getString("address")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
                 getUserParams); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
+
+    //회원 삭제
+    public int deleteUser(int userIdx) {
+        String modifyUserNameQuery = "update User set status = ? where user_idx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
+        Object[] modifyUserNameParams = new Object[]{"D",userIdx}; // 주입될 값들(nickname, userIdx) 순
+        int result1 = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
+        return result1;
+    }
+
+    //삭제된 회원인지 조회
+    public Boolean getUserStatus(String email){
+        String getUserQuery = "select status from User where email = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        String getUserParams = email;
+        String result = this.jdbcTemplate.queryForObject(getUserQuery,
+                String.class, // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
+                getUserParams);
+
+        if(result.equals("D"))
+            return false;
+        return true;
+    }
+
 }

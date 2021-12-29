@@ -106,4 +106,15 @@ public class UserProvider {
         }
     }
 
+    //삭제된 유저인지 조회
+    public Boolean getUserStatus(String email) throws BaseException {
+        try{
+            Boolean getUserStatusRes = userDao.getUserStatus(email);
+            return getUserStatusRes;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 }
