@@ -123,7 +123,7 @@ public class TransanctionController {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             transactionService.modifySellStatus(transactionId,patchTranReq);
-            String result = "판매 정보가 수정되었습니다.";
+            String result = "판매 상태가 수정되었습니다.";
             return new BaseResponse<>(result);
         }catch(BaseException exception){
             exception.printStackTrace();
@@ -152,5 +152,22 @@ public class TransanctionController {
     }
 
     //삭제
-
+    @ResponseBody
+    @DeleteMapping("/{transactionId}")
+    public BaseResponse<String> deleteTransaction(@PathVariable("transactionId") int transactionId){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            int userIdx = transactionProvider.getUserIdx(transactionId);
+            //userIdx와 접근한 유저가 같은지 확인
+            if (userIdx != userIdxByJwt) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            transactionService.deleteTransaction(transactionId);
+            String result = transactionId + "번 판매 정보가 삭제되었습니다.";
+            return new BaseResponse<>(result);
+        }catch(BaseException exception){
+        exception.printStackTrace();
+        return new BaseResponse<>(exception.getStatus());
+        }
+    }
 }

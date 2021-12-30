@@ -28,8 +28,8 @@ com/example/demo/src/entity/SellStatus.java
  com.example.demo.src.entity.SellStatus
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
-com/example/demo/src/entity/TransactionImageEntity.java
- com.example.demo.src.entity.TransactionImageEntity
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
 com/example/demo/src/user/model/PatchUserReq.java
  com.example.demo.src.user.model.PatchUserReq
 com/example/demo/src/transaction/model/GetTranRes.java
@@ -62,6 +62,10 @@ com/example/demo/src/transaction/model/PostTranRes.java
  com.example.demo.src.transaction.model.PostTranRes
 com/example/demo/src/user/model/User.java
  com.example.demo.src.user.model.User
+com/example/demo/src/entity/PostImageEntity.java
+ com.example.demo.src.entity.PostImageEntity
+com/example/demo/src/transaction/model/PatchTranReq.java
+ com.example.demo.src.transaction.model.PatchTranReq
 com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/mypage/MyPageService.java
@@ -70,25 +74,21 @@ com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
+com/example/demo/src/entity/TransactionImageEntity.java
+ com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/src/user/UserService.java
  com.example.demo.src.user.UserService
-com/example/demo/src/transaction/model/PatchTranReq.java
- com.example.demo.src.transaction.model.PatchTranReq
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/mypage/MyPageController.java
  com.example.demo.src.mypage.MyPageController
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
-com/example/demo/src/transaction/TransactionDao.java
- com.example.demo.src.transaction.TransactionDao
+com/example/demo/src/transaction/TransanctionController.java
+ com.example.demo.src.transaction.TransanctionController
 com/example/demo/src/transaction/TransactionService.java
  com.example.demo.src.transaction.TransactionService
 com/example/demo/src/transaction/TransactionProvider.java
  com.example.demo.src.transaction.TransactionProvider
-com/example/demo/src/transaction/TransanctionController.java
- com.example.demo.src.transaction.TransanctionController
-com/example/demo/src/entity/PostImageEntity.java
- com.example.demo.src.entity.PostImageEntity
+com/example/demo/src/transaction/TransactionDao.java
+ com.example.demo.src.transaction.TransactionDao

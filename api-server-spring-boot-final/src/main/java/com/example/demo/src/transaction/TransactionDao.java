@@ -189,6 +189,13 @@ public class TransactionDao {
 
         return result1 & result2;
     }
+
+    public int deleteTransaction(int transactionId) {
+        Object[]deleteTransactionParams = new Object[]{transactionId};
+        int result1 = this.jdbcTemplate.update("delete from Transaction_image where transaction_id = ?",deleteTransactionParams);
+        int result2 = this.jdbcTemplate.update("delete from Transaction where transaction_id = ?",deleteTransactionParams);
+        return result1 & result2;
+    }
 }
 
 

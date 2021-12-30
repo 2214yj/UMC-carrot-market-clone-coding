@@ -60,4 +60,17 @@ public class TransactionService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    @Transactional
+    public void deleteTransaction(int transactionId) throws BaseException {
+        try{
+            int result = transactionDao.deleteTransaction(transactionId);
+            if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
+                throw new BaseException(DELETE_FAIL_TRANSACTION);
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
