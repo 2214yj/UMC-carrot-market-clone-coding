@@ -1,10 +1,7 @@
 package com.example.demo.src.transaction;
 
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.transaction.model.GetSearchTranRes;
-import com.example.demo.src.transaction.model.GetTranRes;
-import com.example.demo.src.transaction.model.PostTranReq;
-import com.example.demo.src.transaction.model.PostTranRes;
+import com.example.demo.src.transaction.model.*;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -113,4 +110,47 @@ public class TransanctionController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    //판매 상태 수정
+    @ResponseBody
+    @PatchMapping("/transactionId}")
+    public BaseResponse<String> modifySellStatus(@PathVariable("transactionId") int transactionId, @RequestBody PatchTranReq patchTranReq){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            int userIdx = transactionProvider.getUserIdx(transactionId);
+            //userIdx와 접근한 유저가 같은지 확인
+            if (userIdx != userIdxByJwt) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            transactionService.modifySellStatus(transactionId,patchTranReq);
+            String result = "판매 정보가 수정되었습니다.";
+            return new BaseResponse<>(result);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //전체 정보 수정
+    @ResponseBody
+    @PutMapping("/{transactionId}")
+    public BaseResponse<String> modifyTransaction(@PathVariable("transactionId") int transactionId, @RequestBody PutTranReq putTranReq){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            int userIdx = transactionProvider.getUserIdx(transactionId);
+            //userIdx와 접근한 유저가 같은지 확인
+            if (userIdx != userIdxByJwt) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            transactionService.modifyTransaction(transactionId,putTranReq);
+            String result = "판매 정보가 수정되었습니다.";
+            return new BaseResponse<>(result);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //삭제
+
 }

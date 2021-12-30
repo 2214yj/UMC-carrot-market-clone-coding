@@ -77,4 +77,15 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int getUserIdx(int transactionId) throws BaseException {
+        try{
+            int userId = transactionDao.getUserIdx(transactionId);
+            return userId;
+        } catch (Exception exception) {
+        exception.printStackTrace();
+        throw new BaseException(DATABASE_ERROR);
+    }
+    }
+
 }
