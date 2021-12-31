@@ -1,8 +1,10 @@
 package com.example.demo.src.transaction;
 
 import com.example.demo.config.BaseException;
+import com.example.demo.src.transaction.model.PatchTranReq;
 import com.example.demo.src.transaction.model.PostTranReq;
 import com.example.demo.src.transaction.model.PostTranRes;
+import com.example.demo.src.transaction.model.PutTranReq;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,6 +29,45 @@ public class TransactionService {
             PostTranRes result = transactionDao.createTransaction(postTranReq,userId);
             return result;
 
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    @Transactional
+    public void modifySellStatus(int transactionId, PatchTranReq patchTranReq) throws BaseException{
+        try{
+            int result = transactionDao.modifySellStatus(transactionId,patchTranReq);
+            if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
+                throw new BaseException(MODIFY_FAIL_SELLSTATUS);
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    @Transactional
+    public void modifyTransaction(int transactionId, PutTranReq putTranReq) throws BaseException {
+        try{
+            int result = transactionDao.modifyTransaction(transactionId,putTranReq);
+            if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
+                throw new BaseException(MODIFY_FAIL_SELLSTATUS);
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    @Transactional
+    public void deleteTransaction(int transactionId) throws BaseException {
+        try{
+            int result = transactionDao.deleteTransaction(transactionId);
+            if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
+                throw new BaseException(DELETE_FAIL_TRANSACTION);
+            }
         }catch(Exception exception){
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);

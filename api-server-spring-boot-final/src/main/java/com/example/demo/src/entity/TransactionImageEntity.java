@@ -18,7 +18,7 @@ public class TransactionImageEntity {
 
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_id")
     private TransactionEntity transaction;
 }

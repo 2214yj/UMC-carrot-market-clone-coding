@@ -1,9 +1,6 @@
 package com.example.demo.src.transaction;
 
-import com.example.demo.src.transaction.model.GetSearchTranRes;
-import com.example.demo.src.transaction.model.GetTranRes;
-import com.example.demo.src.transaction.model.PostTranReq;
-import com.example.demo.src.transaction.model.PostTranRes;
+import com.example.demo.src.transaction.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -166,10 +163,39 @@ public class TransactionDao {
         return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
     }
 
-//    //판매 상태 수정
-//    @ResponseBody
-//    @PatchMapping()
+    public int getUserIdx(int transactionId){
+        int result = jdbcTemplate.queryForObject("SELECT user_id FROM Transaction where transaction_id = ?",Integer.class,transactionId);
+        return result;
+    }
 
+    public int modifySellStatus(int transactionId, PatchTranReq patchTranReq) {
+        Object[] modifySellStatusParams = new Object[]{patchTranReq.getSellStatus(),LocalDateTime.now(),transactionId};
+        int result = this.jdbcTemplate.update("update Transaction set sell_status = ?,updated_at = ? where transaction_id = ?",modifySellStatusParams);
+        return result;
+    }
+
+    public int modifyTransaction(int transactionId, PutTranReq putTranReq) {
+        Object[] modifyTransactionParams = new Object[]{putTranReq.getTitle(),putTranReq.getContent(),putTranReq.getItemName(),putTranReq.getPrice(),putTranReq.getCategory(),putTranReq.getRepImg(),putTranReq.getAddress(),putTranReq.getSellStatus(),LocalDateTime.now(),transactionId};
+        int result1 = this.jdbcTemplate.update("update Transaction set title = ?,content = ?,item_name = ?,price = ?,category = ?,rep_img = ?,address = ?,sell_status = ?,updated_At = ? where transaction_id = ?",modifyTransactionParams);
+        modifyTransactionParams = new Object[]{transactionId};
+        int result2 = this.jdbcTemplate.update("delete from Transaction_image where transaction_id = ?",modifyTransactionParams);
+        if(putTranReq.getImage()!=null) {
+            for (String s : putTranReq.getImage()) {
+                String createTranQuery = "insert into Transaction_Image (url, transaction_id) VALUES (?,?)";
+                Object[] createTranParams = new Object[]{s, transactionId};
+                this.jdbcTemplate.update(createTranQuery, createTranParams);
+            }
+        }
+
+        return result1 & result2;
+    }
+
+    public int deleteTransaction(int transactionId) {
+        Object[]deleteTransactionParams = new Object[]{transactionId};
+        int result1 = this.jdbcTemplate.update("delete from Transaction_image where transaction_id = ?",deleteTransactionParams);
+        int result2 = this.jdbcTemplate.update("delete from Transaction where transaction_id = ?",deleteTransactionParams);
+        return result1 & result2;
+    }
 }
 
 
