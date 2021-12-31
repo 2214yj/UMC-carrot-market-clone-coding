@@ -100,6 +100,23 @@ public class TransactionDao {
         return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
     }
 
+    //페이징 없이 전체 조회
+    public List<GetSearchTranRes> getAllTransactions(int userIdx){
+        String address = jdbcTemplate.queryForObject("SELECT address FROM User where user_idx = ? ",String.class,userIdx);
+        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * FROM Transaction where address = ? ORDER BY created_at DESC LIMIT 100" ,
+                (rs, rowNum) -> new GetSearchTranRes(
+                        rs.getInt("transaction_id"),
+                        rs.getString("title"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("rep_img"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at"),
+                        rs.getString("address")),address);
+
+        return getSearchTranResList;
+    }
+
     public Page<GetSearchTranRes> getSearchAddress(String searchQuery, Pageable pageable) {
         Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
         Object[] getQueryParams = {"%"+searchQuery+"%","SELL"};
