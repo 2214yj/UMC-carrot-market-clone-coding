@@ -2,11 +2,16 @@ package com.example.demo.src.mypage;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
+import com.example.demo.src.mypage.model.GetMyPageRes;
 import com.example.demo.src.mypage.model.PatchImageReq;
+import com.example.demo.src.transaction.model.GetSearchTranRes;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -30,7 +35,19 @@ public class MyPageController {
     }
 
     //회원 프로필 조회 (회원 정보 + 거래 횟수)
-
+    @ResponseBody
+    @GetMapping()
+    public BaseResponse<GetMyPageRes> getMyPage(){
+        try{
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            GetMyPageRes result = myPageProvider.getMyPage(userIdxByJwt);
+            return new BaseResponse<GetMyPageRes>(result);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 
@@ -54,6 +71,24 @@ public class MyPageController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+    //my transaction 조회
+    @ResponseBody
+    @GetMapping("transaction/{userId}")
+    public BaseResponse<Page<GetSearchTranRes>> getTransactionProfile(@PathVariable("userId") int userId){
+        try{
+            Pageable pageable = PageRequest.of( 0,5);
+            Page<GetSearchTranRes> getSearchTranResList = myPageProvider.getMyTransactions(userId,pageable);
+            return new BaseResponse<>(getSearchTranResList);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //my post 조회
+
+    //my comment 조회
 
 
 
