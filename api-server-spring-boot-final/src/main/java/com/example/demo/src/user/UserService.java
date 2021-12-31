@@ -70,9 +70,9 @@ public class UserService {
 
     // 회원정보 수정(Patch)
     @Transactional
-    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
+    public void modifyUserNameAndAddress(PatchUserReq patchUserReq) throws BaseException {
         try {
-            int result = userDao.modifyUserName(patchUserReq); // 해당 과정이 무사히 수행되면 True(1), 그렇지 않으면 False(0)입니다.
+            int result = userDao.modifyUserNameAndAddress(patchUserReq); // 해당 과정이 무사히 수행되면 True(1), 그렇지 않으면 False(0)입니다.
             if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
@@ -89,6 +89,30 @@ public class UserService {
             if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
+        } catch (Exception exception) { // DB에 이상이 있는 경우 에러 메시지를 보냅니다.
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    //회원 비밀번호 수정
+    @Transactional
+    public PatchPasswordRes modifyUserPassword(PatchUserReq patchUserReq) throws BaseException {
+        String pwd;
+        try {
+            // 암호화: postUserReq에서 제공받은 비밀번호를 보안을 위해 암호화시켜 DB에 저장합니다.
+            // ex) password123 -> dfhsjfkjdsnj4@!$!@chdsnjfwkenjfnsjfnjsd.fdsfaifsadjfjaf
+            pwd = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(patchUserReq.getPassword()); // 암호화코드
+            patchUserReq.setPassword(pwd);
+        } catch (Exception ignored) { // 암호화가 실패하였을 경우 에러 발생
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+        try {
+            int result = userDao.modifyUserPassword(patchUserReq); // 해당 과정이 무사히 수행되면 True(1), 그렇지 않으면 False(0)입니다.
+            if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
+                throw new BaseException(MODIFY_FAIL_PASSWORD);
+            }
+            String jwt = jwtService.createJwt(patchUserReq.getUserIdx());
+            return new PatchPasswordRes(jwt,patchUserReq.getUserIdx());
         } catch (Exception exception) { // DB에 이상이 있는 경우 에러 메시지를 보냅니다.
             throw new BaseException(DATABASE_ERROR);
         }
