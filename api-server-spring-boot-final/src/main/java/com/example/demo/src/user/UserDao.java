@@ -78,11 +78,11 @@ public class UserDao {
     }
 
     // 회원정보 변경
-    public int modifyUserName(PatchUserReq patchUserReq) {
+    public int modifyUserNameAndAddress(PatchUserReq patchUserReq) {
         String modifyUserNameQuery = "update User set nickname = ?,updated_at = ?,address = ? where user_idx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
         Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickname(), LocalDateTime.now(), patchUserReq.getAddress(), patchUserReq.getUserIdx()}; // 주입될 값들(nickname, userIdx) 순
-        int result1 = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
-        return result1;
+        int result = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
+        return result;
     }
 
 
@@ -165,4 +165,10 @@ public class UserDao {
         return true;
     }
 
+    public int modifyUserPassword(PatchUserReq patchUserReq) {
+        String modifyUserNameQuery = "update User set password = ?,updated_at = ? where user_idx = ? "; // 해당 userIdx를 만족하는 User를 해당 nickname으로 변경한다.
+        Object[] modifyUserNameParams = new Object[]{patchUserReq.getPassword(), LocalDateTime.now(), patchUserReq.getUserIdx()}; // 주입될 값들(nickname, userIdx) 순
+        int result = this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
+        return result;
+    }
 }
