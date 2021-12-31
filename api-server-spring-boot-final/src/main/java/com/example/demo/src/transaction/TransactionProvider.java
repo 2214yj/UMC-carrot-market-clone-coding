@@ -45,6 +45,18 @@ public class TransactionProvider {
         }
     }
 
+    //페이징 처리 없이 transaction 전체 조회
+    //transaction 전체 조회
+    public List<GetSearchTranRes> getAllTransactions(int userIdx) throws BaseException {
+        try{
+            List<GetSearchTranRes> getSearchTranResList = transactionDao.getAllTransactions(userIdx);
+            return getSearchTranResList;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     //주소로 검색
     public Page<GetSearchTranRes> getSearchAddress(String searchQuery, Pageable pageable) throws BaseException {
         try {

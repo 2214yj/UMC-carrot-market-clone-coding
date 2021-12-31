@@ -8,14 +8,14 @@ com/example/demo/src/mypage/MyPageService.java
  com.example.demo.src.mypage.MyPageService
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/src/MainController.java
- com.example.demo.src.MainController
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
 com/example/demo/src/user/model/PatchPasswordRes.java
  com.example.demo.src.user.model.PatchPasswordRes
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
-com/example/demo/src/transaction/TransactionService.java
- com.example.demo.src.transaction.TransactionService
+com/example/demo/DemoApplication.java
+ com.example.demo.DemoApplication
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/user/model/PostUserRes.java
@@ -30,8 +30,8 @@ com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/src/entity/TransactionImageEntity.java
  com.example.demo.src.entity.TransactionImageEntity
-com/example/demo/src/transaction/TransactionDao.java
- com.example.demo.src.transaction.TransactionDao
+com/example/demo/src/transaction/model/GetTranRes.java
+ com.example.demo.src.transaction.model.GetTranRes
 com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
 com/example/demo/src/transaction/model/PostTranReq.java
@@ -44,8 +44,8 @@ com/example/demo/src/entity/Status.java
  com.example.demo.src.entity.Status
 com/example/demo/src/entity/BaseEntity.java
  com.example.demo.src.entity.BaseEntity
-com/example/demo/src/transaction/TransanctionController.java
- com.example.demo.src.transaction.TransanctionController
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/entity/SellStatus.java
@@ -86,13 +86,13 @@ com/example/demo/src/user/model/User.java
  com.example.demo.src.user.model.User
 com/example/demo/src/user/model/GetUserRes.java
  com.example.demo.src.user.model.GetUserRes
-com/example/demo/src/transaction/model/GetTranRes.java
- com.example.demo.src.transaction.model.GetTranRes
+com/example/demo/src/MainController.java
+ com.example.demo.src.MainController
+com/example/demo/src/transaction/TransanctionController.java
+ com.example.demo.src.transaction.TransanctionController
+com/example/demo/src/transaction/TransactionService.java
+ com.example.demo.src.transaction.TransactionService
 com/example/demo/src/transaction/TransactionProvider.java
  com.example.demo.src.transaction.TransactionProvider
-com/example/demo/DemoApplication.java
- com.example.demo.DemoApplication
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
+com/example/demo/src/transaction/TransactionDao.java
+ com.example.demo.src.transaction.TransactionDao
