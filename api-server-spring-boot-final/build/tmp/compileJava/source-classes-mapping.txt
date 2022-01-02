@@ -32,8 +32,8 @@ com/example/demo/src/entity/TransactionImageEntity.java
  com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/src/transaction/model/GetTranRes.java
  com.example.demo.src.transaction.model.GetTranRes
-com/example/demo/src/user/model/PostUserReq.java
- com.example.demo.src.user.model.PostUserReq
+com/example/demo/src/user/UserDao.java
+ com.example.demo.src.user.UserDao
 com/example/demo/src/transaction/model/PostTranReq.java
  com.example.demo.src.transaction.model.PostTranReq
 com/example/demo/src/user/model/PostLoginRes.java
@@ -46,16 +46,16 @@ com/example/demo/src/entity/BaseEntity.java
  com.example.demo.src.entity.BaseEntity
 com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
-com/example/demo/src/user/UserDao.java
- com.example.demo.src.user.UserDao
+com/example/demo/src/mypage/MyPageController.java
+ com.example.demo.src.mypage.MyPageController
 com/example/demo/src/entity/SellStatus.java
  com.example.demo.src.entity.SellStatus
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
 com/example/demo/src/user/model/PatchUserReq.java
  com.example.demo.src.user.model.PatchUserReq
-com/example/demo/src/mypage/MyPageController.java
- com.example.demo.src.mypage.MyPageController
+com/example/demo/src/user/model/PostUserReq.java
+ com.example.demo.src.user.model.PostUserReq
 com/example/demo/src/entity/TransactionEntity.java
  com.example.demo.src.entity.TransactionEntity
 com/example/demo/src/WebSecurityConfig.java

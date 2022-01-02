@@ -58,8 +58,8 @@ public class UserDao {
 
     // 회원가입
     public int createUser(PostUserReq postUserReq) {
-        String createUserQuery = "insert into User (email, password, nickname, address, status, created_At) VALUES (?,?,?,?,?,?)"; // 실행될 동적 쿼리문
-        Object[] createUserParams = new Object[]{postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getNickname(), postUserReq.getAddress(), "A", LocalDateTime.now()}; // 동적 쿼리의 ?부분에 주입될 값
+        String createUserQuery = "insert into User (email, password, nickname, address, image, status, created_At) VALUES (?,?,?,?,?,?,?)"; // 실행될 동적 쿼리문
+        Object[] createUserParams = new Object[]{postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getNickname(), postUserReq.getAddress(), postUserReq.getImage(),"A", LocalDateTime.now()}; // 동적 쿼리의 ?부분에 주입될 값
         this.jdbcTemplate.update(createUserQuery, createUserParams);
         // email -> postUserReq.getEmail(), password -> postUserReq.getPassword(), nickname -> postUserReq.getNickname() 로 매핑(대응)시킨다음 쿼리문을 실행한다.
         // 즉 DB의 User Table에 (email, password, nickname)값을 가지는 유저 데이터를 삽입(생성)한다.
@@ -118,8 +118,8 @@ public class UserDao {
 
     // 해당 nickname을 갖는 유저들의 정보 조회
     public List<GetUserRes> getUsersByNickname(String nickname) {
-        String getUsersByNicknameQuery = "select * from User where nickname =?"; // 해당 이메일을 만족하는 유저를 조회하는 쿼리문
-        String getUsersByNicknameParams = nickname;
+        String getUsersByNicknameQuery = "select * from User where nickname like ?"; // 해당 이메일을 만족하는 유저를 조회하는 쿼리문
+        String getUsersByNicknameParams = "%"+nickname+"%";
         return this.jdbcTemplate.query(getUsersByNicknameQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("user_idx"),

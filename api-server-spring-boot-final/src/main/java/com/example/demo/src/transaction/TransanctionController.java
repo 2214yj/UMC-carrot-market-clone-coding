@@ -82,12 +82,18 @@ public class TransanctionController {
                                                                 @RequestParam(value = "sort",required = false, defaultValue = "asc")String sort
                                                                 ){
         try{
+            if(sortType.equals("id")){
+                sortType = "transaction_id";
+            }else if(sortType.equals("date")){
+                sortType = "created_at";
+            }
             Pageable pageable;
             if(sort.equals("desc"))
                 pageable = PageRequest.of( 0,5,Sort.by(sortType).descending());
             else
                 pageable = PageRequest.of( 0,5,Sort.by(sortType).ascending());
             Page<GetSearchTranRes> getSearchTranResList;
+
             switch(searchType){
                 case 1:
                     //주소 검색
@@ -113,7 +119,7 @@ public class TransanctionController {
 
     //판매 상태 수정
     @ResponseBody
-    @PatchMapping("/transactionId}")
+    @PatchMapping("/{transactionId}")
     public BaseResponse<String> modifySellStatus(@PathVariable("transactionId") int transactionId, @RequestBody PatchTranReq patchTranReq){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
