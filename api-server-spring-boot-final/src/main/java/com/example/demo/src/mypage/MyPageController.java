@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -74,11 +75,17 @@ public class MyPageController {
 
     //my transaction 조회
     @ResponseBody
-    @GetMapping("transaction/{userId}")
-    public BaseResponse<Page<GetSearchTranRes>> getTransactionProfile(@PathVariable("userId") int userId){
+    @GetMapping("transaction")
+    public BaseResponse<Page<GetSearchTranRes>> getTransactionProfile(@RequestParam(value = "sort", required = false, defaultValue = "desc") String sort){
         try{
-            Pageable pageable = PageRequest.of( 0,5);
-            Page<GetSearchTranRes> getSearchTranResList = myPageProvider.getMyTransactions(userId,pageable);
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            Pageable pageable;
+            if(sort.equals("desc"))
+                pageable = PageRequest.of( 0,5,Sort.by("created_at").descending());
+            else
+                pageable = PageRequest.of( 0,5,Sort.by("created_at").ascending());
+            Page<GetSearchTranRes> getSearchTranResList = myPageProvider.getMyTransactions(userIdxByJwt,pageable);
             return new BaseResponse<>(getSearchTranResList);
         }catch(BaseException exception){
             exception.printStackTrace();
