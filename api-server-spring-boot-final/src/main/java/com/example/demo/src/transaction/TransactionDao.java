@@ -81,6 +81,59 @@ public class TransactionDao {
         return getTranRes1;
     }
 
+    //transaction 상세 페이지 검색 댓글 포함
+    public GetTranRes getTransactionAndComment(int transactionId,Pageable pageable){
+        String getDetailQuery = "select title,content,item_name,price,category,address,sell_status,created_at from Transaction where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        int getDetailParams = transactionId;
+        GetTranRes getTranRes1 = this.jdbcTemplate.queryForObject(getDetailQuery,
+                (rs, rowNum) -> new GetTranRes(
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("item_name"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("address"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at")
+                ),
+                getDetailParams);
+
+        getDetailQuery = "select url from Transaction_Image where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        getDetailParams = transactionId;
+        getTranRes1.setImage(this.jdbcTemplate.query(getDetailQuery,
+                (rs, rowNum) -> new String(
+                        rs.getString("url")
+                ),
+                getDetailParams));
+        int userId = this.jdbcTemplate.queryForObject("select user_id from Transaction where transaction_id = ?",Integer.class, transactionId);
+        getDetailQuery = "select nickname, image from User where user_idx = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        getDetailParams = userId;
+        GetTranRes getTranRes2 = this.jdbcTemplate.queryForObject(getDetailQuery,
+                (rs, rowNum) -> new GetTranRes(
+                        rs.getString("nickname"),
+                        rs.getString("image")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
+                getDetailParams);
+        getTranRes1.setNickname(getTranRes2.getNickname());
+        getTranRes1.setAddress(getTranRes2.getAddress());
+        getTranRes1.setUserImage(getTranRes2.getUserImage());
+//
+        int count = jdbcTemplate.queryForObject("SELECT count(*) FROM COMMENT WHERE transaction_id = ?", Integer.class,transactionId);
+        Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
+        List<Comment> commentList = jdbcTemplate.query("SELECT c.comment_id,c.content,u.nickname,c.created_At FROM COMMENT c,USER u WHERE c.user_id = u.user_idx AND c.transaction_id = ? ORDER BY " + order.getProperty() + " "
+                        + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
+                (rs, rowNum) -> new Comment(
+                        rs.getInt("comment_id"),
+                        rs.getString("content"),
+                        rs.getString("nickname"),
+                        rs.getString("created_At")
+                        ),transactionId);
+
+        getTranRes1.setCommentPage(new PageImpl<Comment>(commentList,pageable,count));
+
+        return getTranRes1;
+    }
+
+
     //전체 조회
     public Page<GetSearchTranRes> getAllTransactions(Pageable pageable){
         int count = jdbcTemplate.queryForObject("SELECT count(*) FROM Transaction", Integer.class);
@@ -212,6 +265,60 @@ public class TransactionDao {
         int result1 = this.jdbcTemplate.update("delete from Transaction_image where transaction_id = ?",deleteTransactionParams);
         int result2 = this.jdbcTemplate.update("delete from Transaction where transaction_id = ?",deleteTransactionParams);
         return result1 & result2;
+    }
+
+    public GetTranRes createComment(int userIdxByJwt, int transactionId,PostCommentReq postCommentReq, Pageable pageable) {
+        //댓글 추가
+        Object[] createCommentParams = new Object[]{userIdxByJwt,postCommentReq.getContent(),transactionId,LocalDateTime.now()};
+        this.jdbcTemplate.update("insert comment(user_id,content,transaction_id,created_At) values(?,?,?,?)",createCommentParams);
+        String getDetailQuery = "select title,content,item_name,price,category,address,sell_status,created_at from Transaction where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        int getDetailParams = transactionId;
+        GetTranRes getTranRes1 = this.jdbcTemplate.queryForObject(getDetailQuery,
+                (rs, rowNum) -> new GetTranRes(
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("item_name"),
+                        rs.getString("price"),
+                        rs.getString("category"),
+                        rs.getString("address"),
+                        rs.getString("sell_status"),
+                        rs.getString("created_at")
+                ),
+                getDetailParams);
+
+        getDetailQuery = "select url from Transaction_Image where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        getDetailParams = transactionId;
+        getTranRes1.setImage(this.jdbcTemplate.query(getDetailQuery,
+                (rs, rowNum) -> new String(
+                        rs.getString("url")
+                ),
+                getDetailParams));
+        int userId = this.jdbcTemplate.queryForObject("select user_id from Transaction where transaction_id = ?",Integer.class, transactionId);
+        getDetailQuery = "select nickname, image from User where user_idx = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        getDetailParams = userId;
+        GetTranRes getTranRes2 = this.jdbcTemplate.queryForObject(getDetailQuery,
+                (rs, rowNum) -> new GetTranRes(
+                        rs.getString("nickname"),
+                        rs.getString("image")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
+                getDetailParams);
+        getTranRes1.setNickname(getTranRes2.getNickname());
+        getTranRes1.setAddress(getTranRes2.getAddress());
+        getTranRes1.setUserImage(getTranRes2.getUserImage());
+//댓글 조회
+        int count = jdbcTemplate.queryForObject("SELECT count(*) FROM COMMENT WHERE transaction_id = ?", Integer.class,transactionId);
+        Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
+        List<Comment> commentList = jdbcTemplate.query("SELECT c.comment_id,c.content,u.nickname,c.created_At FROM COMMENT c,USER u WHERE c.user_id = u.user_idx AND c.transaction_id = ? ORDER BY " + order.getProperty() + " "
+                        + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
+                (rs, rowNum) -> new Comment(
+                        rs.getInt("comment_id"),
+                        rs.getString("content"),
+                        rs.getString("nickname"),
+                        rs.getString("created_At")
+                ),transactionId);
+
+        getTranRes1.setCommentPage(new PageImpl<Comment>(commentList,pageable,count));
+
+        return getTranRes1;
     }
 }
 

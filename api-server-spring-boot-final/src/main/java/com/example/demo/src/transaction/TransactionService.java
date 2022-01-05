@@ -1,14 +1,12 @@
 package com.example.demo.src.transaction;
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.transaction.model.PatchTranReq;
-import com.example.demo.src.transaction.model.PostTranReq;
-import com.example.demo.src.transaction.model.PostTranRes;
-import com.example.demo.src.transaction.model.PutTranReq;
+import com.example.demo.src.transaction.model.*;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -70,6 +68,17 @@ public class TransactionService {
             }
         }catch(Exception exception){
             exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    @Transactional
+    public GetTranRes createComment(int userIdxByJwt, int transactionId, PostCommentReq postCommentReq,Pageable pageable) throws BaseException {
+        try{
+            GetTranRes getTranRes = transactionDao.createComment(userIdxByJwt,transactionId,postCommentReq,pageable);
+            return getTranRes;
+        }catch(Exception exception){
+            exception.printStackTrace();;
             throw new BaseException(DATABASE_ERROR);
         }
     }

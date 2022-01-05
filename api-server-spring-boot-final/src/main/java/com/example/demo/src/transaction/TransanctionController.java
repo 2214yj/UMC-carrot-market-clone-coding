@@ -59,6 +59,38 @@ public class TransanctionController {
         }
     }
 
+    //상세 페이지 조회 댓글 포함
+    @ResponseBody
+    @GetMapping("search/comment/{transactionId}")
+    public BaseResponse<GetTranRes> getTransactionAndComment(@PathVariable("transactionId") int transactionId){
+        try {
+            Pageable pageable;
+            pageable = PageRequest.of( 0,5,Sort.by("created_At").ascending());
+            GetTranRes getTranRes = transactionProvider.getTransactionAndComment(transactionId,pageable);
+            return new BaseResponse<>(getTranRes);
+        } catch (BaseException exception) {
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //댓글 생성
+    @ResponseBody
+    @PostMapping("search/comment/{transactionId}")
+    public BaseResponse<GetTranRes> createComment(@PathVariable("transactionId") int transactionId, @RequestBody PostCommentReq postCommentReq){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            Pageable pageable;
+            pageable = PageRequest.of(0,5,Sort.by("created_At").ascending());
+            GetTranRes getTranRes = transactionService.createComment(userIdxByJwt,transactionId,postCommentReq,pageable);
+            return new BaseResponse<>(getTranRes);
+        } catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
     //전체 검색
     @ResponseBody
     @GetMapping(value = {"/", "/{page}"})

@@ -34,6 +34,17 @@ public class TransactionProvider {
         }
     }
 
+    //transaction 상세 페이지 검색 댓글 포함
+    public GetTranRes getTransactionAndComment(int transactionId, Pageable pageable) throws BaseException {
+        try{
+            GetTranRes getTranRes = transactionDao.getTransactionAndComment(transactionId, pageable);
+            return getTranRes;
+        }catch (Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     //transaction 전체 조회
     public Page<GetSearchTranRes> getAllTransactions(Pageable pageable) throws BaseException {
         try{

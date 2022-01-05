@@ -16,12 +16,14 @@ public class UserEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userIdx;
 
+    @NotNull
     @Column(unique = true)
     private String email;
 
     @NotNull
     private String password;
 
+    @NotNull
     private String nickname;
 
     private String address;

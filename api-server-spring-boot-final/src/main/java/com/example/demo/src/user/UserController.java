@@ -72,6 +72,15 @@ public class UserController {
         if (!isRegexEmail(postUserReq.getEmail())) {
             return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
         }
+        if(postUserReq.getPassword() == null){  //패스워드 값이 존재하는지 확인
+            return new BaseResponse<>((POST_USERS_EMPTY_PASSWORD));
+        }
+        if (!isRegexEmail(postUserReq.getPassword())) {
+            return new BaseResponse<>(POST_USERS_INVALID_PASSWORD);
+        }
+        if(postUserReq.getNickname() == null){  //닉네임 값이 존재하는지 확인
+            return new BaseResponse<>((POST_USERS_EMPTY_NICKNAME));
+        }
         try {
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
@@ -91,6 +100,12 @@ public class UserController {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
+            if (postLoginReq.getEmail() == null) {
+                return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            }
+            if(postLoginReq.getPassword() == null){  //패스워드 값이 존재하는지 확인
+                return new BaseResponse<>((POST_USERS_EMPTY_PASSWORD));
+            }
             if(!userProvider.getUserStatus(postLoginReq.getEmail()))
                 return new BaseResponse<>(INVALID_USER_DELETED);
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
