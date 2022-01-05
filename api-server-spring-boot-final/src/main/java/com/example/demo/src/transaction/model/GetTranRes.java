@@ -3,6 +3,7 @@ package com.example.demo.src.transaction.model;
 import com.example.demo.src.entity.SellStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,7 @@ public class GetTranRes {
     private String nickname;
     private String address;
     private String userImage;
+    private Page<Comment> commentPage;
 
     public GetTranRes(String title, String content, String item_name, String price, String category, String address,String sell_status, String created_at) {
         this.title = title;
