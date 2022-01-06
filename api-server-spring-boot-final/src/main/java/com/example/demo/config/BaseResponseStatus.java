@@ -60,6 +60,8 @@ public enum BaseResponseStatus {
     MODIFY_FAIL_SELLSTATUS(false,4015,"판매 상태값 수정 실패"),
     //[PATCH] 비밀번호 수정 실패
     MODIFY_FAIL_PASSWORD(false,4016,"비밀번호 수정 실패"),
+    //[PATCH] 댓글 수정 실패
+    MODIFY_FAIL_COMMENT(false,4017,"댓글 수정 실패"),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),

@@ -82,4 +82,15 @@ public class TransactionService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    @Transactional
+    public GetTranRes modifyComment(int commentId, int transactionId, String content, Pageable pageable) throws BaseException {
+        try{
+            GetTranRes getTranRes = transactionDao.modifyComment(commentId,transactionId,content,pageable);
+            return getTranRes;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

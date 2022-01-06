@@ -90,6 +90,33 @@ public class TransanctionController {
         }
     }
 
+    //댓글 수정
+    @ResponseBody
+    @PatchMapping("search/comment/{transactionId}")
+    public BaseResponse<GetTranRes> modifyComment(@PathVariable("transactionId") int transactionId, @RequestBody Comment comment){
+        try{
+            int userIdByJwt = jwtService.getUserIdx();
+            int commentId = comment.getId();
+            //해당 comment의 userId와 로그인한 userId가 동일한지 확인
+            int userId = transactionProvider.getCommentUserId(commentId);
+            if (userIdByJwt != userId) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //해당 comment의 transactionId와 현재 transactionId가 일치하는지 확인
+            int commentTransactionId = transactionProvider.getCommentTransactionId(commentId);
+            if(commentTransactionId != transactionId){
+                return new BaseResponse<>(MODIFY_FAIL_COMMENT);
+            }
+            Pageable pageable;
+            pageable = PageRequest.of(0,5,Sort.by("created_At").ascending());
+            GetTranRes getTranRes = transactionService.modifyComment(commentId,transactionId,comment.getContent(),pageable);
+            return new BaseResponse<>(getTranRes);
+        } catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 
     //전체 검색
     @ResponseBody
