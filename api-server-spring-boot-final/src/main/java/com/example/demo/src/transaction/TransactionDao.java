@@ -258,6 +258,11 @@ public class TransactionDao {
         //Comment의 유저 id 조회
         return this.jdbcTemplate.queryForObject("select user_id from Comment where comment_id = ?",Integer.class,commentId);
     }
+
+    public int getCommentTransactionId(int commentId) {
+        //Comment의 transaction id 조회
+        return this.jdbcTemplate.queryForObject("select transaction_id from Comment where comment_id = ?",Integer.class,commentId);
+    }
 }
 
 

@@ -120,4 +120,14 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int getCommentTransactionId(int commentId) throws BaseException {
+        try{
+            int commentTransactionId = transactionDao.getCommentTransactionId(commentId);
+            return commentTransactionId;
+        } catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

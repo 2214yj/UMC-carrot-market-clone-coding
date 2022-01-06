@@ -103,6 +103,10 @@ public class TransanctionController {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             //해당 comment의 transactionId와 현재 transactionId가 일치하는지 확인
+            int commentTransactionId = transactionProvider.getCommentTransactionId(commentId);
+            if(commentTransactionId != transactionId){
+                return new BaseResponse<>(MODIFY_FAIL_COMMENT);
+            }
             Pageable pageable;
             pageable = PageRequest.of(0,5,Sort.by("created_At").ascending());
             GetTranRes getTranRes = transactionService.modifyComment(commentId,transactionId,comment.getContent(),pageable);
