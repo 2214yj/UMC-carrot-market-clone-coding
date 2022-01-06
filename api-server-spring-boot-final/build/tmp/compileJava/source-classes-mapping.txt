@@ -50,12 +50,12 @@ com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
 com/example/demo/src/mypage/MyPageService.java
  com.example.demo.src.mypage.MyPageService
-com/example/demo/src/comment/CommentService.java
- com.example.demo.src.comment.CommentService
+com/example/demo/src/transaction/model/PostCommentReq.java
+ com.example.demo.src.transaction.model.PostCommentReq
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/src/comment/CommentProvider.java
- com.example.demo.src.comment.CommentProvider
+com/example/demo/src/entity/TransactionImageEntity.java
+ com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
 com/example/demo/utils/JwtService.java
@@ -72,8 +72,8 @@ com/example/demo/src/entity/UserEntity.java
  com.example.demo.src.entity.UserEntity
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
-com/example/demo/src/comment/CommentDao.java
- com.example.demo.src.comment.CommentDao
+com/example/demo/src/transaction/model/GetTranRes.java
+ com.example.demo.src.transaction.model.GetTranRes
 com/example/demo/src/entity/PostImageEntity.java
  com.example.demo.src.entity.PostImageEntity
 com/example/demo/src/entity/CommentEntity.java
@@ -82,8 +82,8 @@ com/example/demo/src/entity/PostEntity.java
  com.example.demo.src.entity.PostEntity
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
-com/example/demo/src/comment/CommentController.java
- com.example.demo.src.comment.CommentController
+com/example/demo/src/user/UserService.java
+ com.example.demo.src.user.UserService
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
 com/example/demo/src/mypage/MyPageProvider.java
@@ -92,16 +92,8 @@ com/example/demo/src/user/model/User.java
  com.example.demo.src.user.model.User
 com/example/demo/src/transaction/model/Comment.java
  com.example.demo.src.transaction.model.Comment
-com/example/demo/src/user/UserService.java
- com.example.demo.src.user.UserService
-com/example/demo/src/transaction/model/GetTranRes.java
- com.example.demo.src.transaction.model.GetTranRes
-com/example/demo/src/entity/TransactionImageEntity.java
- com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/src/MainController.java
  com.example.demo.src.MainController
-com/example/demo/src/transaction/model/PostCommentReq.java
- com.example.demo.src.transaction.model.PostCommentReq
 com/example/demo/src/transaction/TransanctionController.java
  com.example.demo.src.transaction.TransanctionController
 com/example/demo/src/transaction/TransactionService.java

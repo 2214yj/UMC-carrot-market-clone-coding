@@ -90,6 +90,22 @@ public class TransanctionController {
         }
     }
 
+    //댓글 수정
+    @ResponseBody
+    @PatchMapping("search/comment/{transactionId}")
+    public BaseResponse<GetTranRes> modifyComment(@PathVariable("transactionId") int transactionId, @RequestBody Comment comment){
+        try{
+            int userIdByJwt = jwtService.getUserIdx();
+            Pageable pageable;
+            pageable = PageRequest.of(0,5,Sort.by("created_At").ascending());
+            GetTranRes getTranRes = transactionService.modifyComment(userIdByJwt,transactionId,comment.getContent(),pageable);
+            return new BaseResponse<>(getTranRes);
+        } catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 
     //전체 검색
     @ResponseBody
