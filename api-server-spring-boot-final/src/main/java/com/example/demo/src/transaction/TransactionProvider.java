@@ -111,4 +111,13 @@ public class TransactionProvider {
     }
     }
 
+    public int getCommentUserId(int commentId) throws BaseException {
+        try{
+            int userId = transactionDao.getCommentUserIdx(commentId);
+            return userId;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

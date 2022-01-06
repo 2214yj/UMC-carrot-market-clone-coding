@@ -244,14 +244,19 @@ public class TransactionDao {
         return getTranRes1;
     }
 
-    public GetTranRes modifyComment(int userIdByJwt, int transactionId, String content, Pageable pageable) {
+    public GetTranRes modifyComment(int commentId, int transactionId, String content, Pageable pageable) {
         //댓글 수정
-        Object[] modifyCommentParams = new Object[]{ content,LocalDateTime.now(),userIdByJwt,transactionId };
-        this.jdbcTemplate.update("update Comment set content = ?,updated_at = ? where user_id = ? and transaction_id = ?",modifyCommentParams);
+        Object[] modifyCommentParams = new Object[]{ content,LocalDateTime.now(),commentId,transactionId };
+        this.jdbcTemplate.update("update Comment set content = ?,updated_at = ? where comment_id = ? and transaction_id = ?",modifyCommentParams);
         //상세 페이지 및 댓글 조회
         GetTranRes getTranRes1 = getTransactionAndComment(transactionId,pageable);
 
         return getTranRes1;
+    }
+
+    public int getCommentUserIdx(int commentId) {
+        //Comment의 유저 id 조회
+        return this.jdbcTemplate.queryForObject("select user_id from Comment where comment_id = ?",Integer.class,commentId);
     }
 }
 

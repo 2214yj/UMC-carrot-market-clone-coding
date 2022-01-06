@@ -84,9 +84,9 @@ public class TransactionService {
     }
 
     @Transactional
-    public GetTranRes modifyComment(int userIdByJwt, int transactionId, String content, Pageable pageable) throws BaseException {
+    public GetTranRes modifyComment(int commentId, int transactionId, String content, Pageable pageable) throws BaseException {
         try{
-            GetTranRes getTranRes = transactionDao.modifyComment(userIdByJwt,transactionId,content,pageable);
+            GetTranRes getTranRes = transactionDao.modifyComment(commentId,transactionId,content,pageable);
             return getTranRes;
         }catch(Exception exception){
             exception.printStackTrace();
