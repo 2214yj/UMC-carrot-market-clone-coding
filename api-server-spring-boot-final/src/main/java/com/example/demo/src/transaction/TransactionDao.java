@@ -263,6 +263,16 @@ public class TransactionDao {
         //Comment의 transaction id 조회
         return this.jdbcTemplate.queryForObject("select transaction_id from Comment where comment_id = ?",Integer.class,commentId);
     }
+
+    public GetTranRes deleteComment(int commentId, int transactionId, Pageable pageable) {
+        //댓글 삭제
+        Object[] deleteCommentParams = new Object[]{"D",commentId };
+        this.jdbcTemplate.update("update Comment set status = ? where comment_id = ? ",deleteCommentParams);
+        //상세 페이지 및 댓글 조회
+        GetTranRes getTranRes1 = getTransactionAndComment(transactionId,pageable);
+
+        return getTranRes1;
+    }
 }
 
 
