@@ -87,14 +87,15 @@ public class TransactionDao {
         //댓글 조회
         int count = jdbcTemplate.queryForObject("SELECT count(*) FROM COMMENT WHERE transaction_id = ?", Integer.class,transactionId);
         Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
-        List<Comment> commentList = jdbcTemplate.query("SELECT c.comment_id,c.content,u.nickname,c.created_At FROM COMMENT c,USER u WHERE c.user_id = u.user_idx AND c.transaction_id = ? ORDER BY " + order.getProperty() + " "
+        Object[] getTransactionAndCommentParams = new Object[]{transactionId,"A"};
+        List<Comment> commentList = jdbcTemplate.query("SELECT c.comment_id,c.content,u.nickname,c.created_At FROM COMMENT c,USER u WHERE c.user_id = u.user_idx AND c.transaction_id = ? AND c.status = ? ORDER BY " + order.getProperty() + " "
                         + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
                 (rs, rowNum) -> new Comment(
                         rs.getInt("comment_id"),
                         rs.getString("content"),
                         rs.getString("nickname"),
                         rs.getString("created_At")
-                        ),transactionId);
+                        ),getTransactionAndCommentParams);
 
         getTranRes1.setCommentPage(new PageImpl<Comment>(commentList,pageable,count));
 
@@ -237,8 +238,8 @@ public class TransactionDao {
 
     public GetTranRes createComment(int userIdxByJwt, int transactionId,PostCommentReq postCommentReq, Pageable pageable) {
         //댓글 추가
-        Object[] createCommentParams = new Object[]{userIdxByJwt,postCommentReq.getContent(),transactionId,LocalDateTime.now()};
-        this.jdbcTemplate.update("insert comment(user_id,content,transaction_id,created_At) values(?,?,?,?)",createCommentParams);
+        Object[] createCommentParams = new Object[]{userIdxByJwt,postCommentReq.getContent(),transactionId,LocalDateTime.now(),"A"};
+        this.jdbcTemplate.update("insert comment(user_id,content,transaction_id,created_At,status) values(?,?,?,?,?)",createCommentParams);
         //상세 페이지 및 댓글 조회
         GetTranRes getTranRes1 = getTransactionAndComment(transactionId,pageable);
         return getTranRes1;
@@ -272,6 +273,11 @@ public class TransactionDao {
         GetTranRes getTranRes1 = getTransactionAndComment(transactionId,pageable);
 
         return getTranRes1;
+    }
+
+    public String getCommentStatus(int commentId) {
+        //댓글 상태값 조회
+        return this.jdbcTemplate.queryForObject("select status from Comment where comment_id = ?",String.class,commentId);
     }
 }
 

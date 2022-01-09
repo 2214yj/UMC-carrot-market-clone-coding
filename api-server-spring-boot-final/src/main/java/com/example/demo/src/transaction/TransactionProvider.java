@@ -130,4 +130,14 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public String getCommentStatus(int commentId) throws BaseException {
+        try{
+            String commentStatus = transactionDao.getCommentStatus(commentId);
+            return commentStatus;
+        } catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
