@@ -93,4 +93,14 @@ public class TransactionService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public GetTranRes deleteComment(int commentId, int transactionId, Pageable pageable) throws BaseException {
+        try{
+            GetTranRes getTranRes = transactionDao.deleteComment(commentId,transactionId,pageable);
+            return getTranRes;
+        }catch (Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
