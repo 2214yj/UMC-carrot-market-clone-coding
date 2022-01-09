@@ -121,8 +121,13 @@ public class TransanctionController {
     @ResponseBody
     @DeleteMapping("search/comment/{transactionId}")
     public BaseResponse<GetTranRes> deleteComment(@PathVariable("transactionId") int transactionId,
-                                                  @RequestParam(value = "id") int commentId){
+                                                  @RequestParam(value = "id",defaultValue = "0") int commentId){
         try{
+            //전달받은 commentId 값이 없는 경우
+            if(commentId == 0){
+                return new BaseResponse<>(DELETE_FAIL_COMMENT);
+            }
+
             int userIdByJwt = jwtService.getUserIdx();
             //해당 comment의 userId와 로그인한 userId가 동일한지 확인
             int userId = transactionProvider.getCommentUserId(commentId);
