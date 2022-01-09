@@ -274,6 +274,11 @@ public class TransactionDao {
 
         return getTranRes1;
     }
+
+    public String getCommentStatus(int commentId) {
+        //댓글 상태값 조회
+        return this.jdbcTemplate.queryForObject("select status from Comment where comment_id = ?",String.class,commentId);
+    }
 }
 
 
