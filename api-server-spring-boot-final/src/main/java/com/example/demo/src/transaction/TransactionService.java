@@ -103,4 +103,16 @@ public class TransactionService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public void likeTransaction(int transactionId, int userIdxByJwt) throws BaseException {
+        try{
+            int result = transactionDao.likeTransaction(transactionId,userIdxByJwt);
+            if(result == 0){
+                throw new BaseException(ADD_FAIL_TRANSACTIONLIKE);
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

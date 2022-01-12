@@ -68,8 +68,10 @@ public enum BaseResponseStatus {
 
     //[DELETE] 오류
     DELETE_FAIL_TRANSACTION(false, 4030, "판매 정보 삭제 실패"),
-    DELETE_FAIL_COMMENT(false,4031,"댓글 삭제 실패");
+    DELETE_FAIL_COMMENT(false,4031,"댓글 삭제 실패"),
 
+    //좋아요 오류
+    ADD_FAIL_TRANSACTIONLIKE(false,4040,"좋아요 추가 실패");
 
     // 5000 : 필요시 만들어서 쓰세요
     // 6000 : 필요시 만들어서 쓰세요

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "transaction_like")
-public class TransactionLikeEntity {
+public class TransactionLikeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_like_id")
