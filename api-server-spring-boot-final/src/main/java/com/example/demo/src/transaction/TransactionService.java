@@ -115,4 +115,16 @@ public class TransactionService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public void likeTransactionAgain(int transactionId, int userIdxByJwt,String status) throws BaseException {
+        try{
+            int result = transactionDao.likeTransactionAgain(transactionId,userIdxByJwt,status);
+            if(result == 0){
+                throw new BaseException(ADD_FAIL_TRANSACTIONLIKE);
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

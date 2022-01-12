@@ -140,4 +140,24 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int likeTransactionCount(int transactionId, int userIdxByJwt) throws BaseException {
+        try{
+            int likeTransactionCount = transactionDao.likeTransactionCount(transactionId,userIdxByJwt);
+            return likeTransactionCount;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public String getlikeTransactionStatus(int transactionId, int userIdxByJwt) throws BaseException {
+        try{
+            String result = transactionDao.getLikeTransactionStatus(transactionId,userIdxByJwt);
+            return result;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
