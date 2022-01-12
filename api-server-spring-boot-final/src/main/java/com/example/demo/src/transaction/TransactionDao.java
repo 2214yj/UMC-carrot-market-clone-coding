@@ -279,6 +279,11 @@ public class TransactionDao {
         //댓글 상태값 조회
         return this.jdbcTemplate.queryForObject("select status from Comment where comment_id = ?",String.class,commentId);
     }
+
+    public int likeTransaction(int transactionId, int userIdxByJwt) {
+        Object[] likeTransactionParams = new Object[]{transactionId,userIdxByJwt,LocalDateTime.now()};
+        return this.jdbcTemplate.update("insert into transaction_like(transaction_id,user_id,created_at) values(?,?,?)",likeTransactionParams);
+    }
 }
 
 

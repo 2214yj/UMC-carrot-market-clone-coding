@@ -59,6 +59,19 @@ public class TransanctionController {
         }
     }
 
+    //좋아요
+    @PostMapping("search/{transactionId}/like")
+    public BaseResponse<String> likeTransaction(@PathVariable("transactionId") int transactionId){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            transactionService.likeTransaction(transactionId,userIdxByJwt);
+            String result = "좋아요를 눌렀습니다.";
+            return new BaseResponse<>(result);
+        }catch(BaseException exception){
+            exception.printStackTrace();
+            return new BaseResponse(exception.getStatus());
+        }
+    }
     //상세 페이지 조회 댓글 포함
     @ResponseBody
     @GetMapping("search/comment/{transactionId}")
