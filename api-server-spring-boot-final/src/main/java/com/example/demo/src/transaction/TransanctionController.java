@@ -64,7 +64,14 @@ public class TransanctionController {
     public BaseResponse<String> likeTransaction(@PathVariable("transactionId") int transactionId){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
-            transactionService.likeTransaction(transactionId,userIdxByJwt);
+            int likeTransactionCount = transactionProvider.likeTransactionCount(transactionId,userIdxByJwt);
+            if(likeTransactionCount == 0){
+                transactionService.likeTransaction(transactionId,userIdxByJwt);
+            }else{
+                //현재 상태값 확인 후 상태값 반대로 수정 필요
+                String status = transactionProvider.getlikeTransactionStatus(transactionId,userIdxByJwt);
+                transactionService.likeTransactionAgain(transactionId,userIdxByJwt,status);
+            }
             String result = "좋아요를 눌렀습니다.";
             return new BaseResponse<>(result);
         }catch(BaseException exception){

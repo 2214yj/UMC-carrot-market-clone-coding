@@ -281,8 +281,27 @@ public class TransactionDao {
     }
 
     public int likeTransaction(int transactionId, int userIdxByJwt) {
-        Object[] likeTransactionParams = new Object[]{transactionId,userIdxByJwt,LocalDateTime.now()};
-        return this.jdbcTemplate.update("insert into transaction_like(transaction_id,user_id,created_at) values(?,?,?)",likeTransactionParams);
+        Object[] likeTransactionParams = new Object[]{transactionId,userIdxByJwt,LocalDateTime.now(),"A"};
+        return this.jdbcTemplate.update("insert into transaction_like(transaction_id,user_id,created_at,status) values(?,?,?,?)",likeTransactionParams);
+    }
+
+    public int likeTransactionCount(int transactionId, int userIdxByJwt){
+        Object[] likeTransactionCountParams = new Object[]{transactionId,userIdxByJwt};
+        return this.jdbcTemplate.queryForObject("select count(*) from transaction_like where transaction_id = ? and user_id = ?",
+                Integer.class,likeTransactionCountParams);
+    }
+
+    public int likeTransactionAgain(int transactionId, int userIdxByJwt,String status) {
+        Object[] likeTransactionCountParams = new Object[]{status,transactionId,userIdxByJwt};
+        return this.jdbcTemplate.update("update transaction_like set status = ? where transaction_id = ? and user_id = ?",
+                likeTransactionCountParams);
+    }
+
+    public String getLikeTransactionStatus(int transactionId, int userIdxByJwt) {
+        Object[] likeTransactionStatusParams = new Object[]{transactionId,userIdxByJwt};
+        String nowStatus = this.jdbcTemplate.queryForObject("select status from transaction_like where transaction_id = ? and user_id = ?",
+                String.class,likeTransactionStatusParams);
+        return (nowStatus.equals("A"))? "D" : "A";
     }
 }
 
