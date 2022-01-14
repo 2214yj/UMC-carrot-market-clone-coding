@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -17,12 +18,23 @@ import java.util.List;
 public class PostTranReq {
     @NotEmpty(message = "message cannot be empty")
     private String title;
+
     @NotEmpty(message = "content cannot be empty")
     private String content;
+
+    @NotEmpty(message = "content cannot be empty")
     private String itemName;
+
+    @Min(value = 0,message = "0원 이상만")
     private String price;
+
+    @NotEmpty(message = "category cannot be empty")
     private String category;
+
     private String repImg;
+
+    @NotEmpty(message = "address cannot be empty")
     private String address;
+
     private List<String> image;
 }
