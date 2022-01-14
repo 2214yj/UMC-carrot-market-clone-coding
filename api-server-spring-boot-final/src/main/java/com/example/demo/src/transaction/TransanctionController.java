@@ -11,10 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import static com.example.demo.config.BaseResponseStatus.*;
 import com.example.demo.config.BaseException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +36,10 @@ public class TransanctionController {
     //transaction 생성
     @ResponseBody
     @PostMapping("/new-transaction")
-    public BaseResponse<PostTranRes> createTransaction(@RequestBody PostTranReq postTranReq){
+    public BaseResponse<PostTranRes> createTransaction( @RequestBody @Valid PostTranReq postTranReq){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
+
             PostTranRes postTranRes = transactionService.createTransaction(postTranReq,userIdxByJwt);
             return new BaseResponse<>(postTranRes);
         }catch(BaseException exception){
