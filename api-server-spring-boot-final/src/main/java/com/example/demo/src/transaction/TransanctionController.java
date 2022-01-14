@@ -100,7 +100,7 @@ public class TransanctionController {
     //댓글 생성
     @ResponseBody
     @PostMapping("search/comment/{transactionId}")
-    public BaseResponse<GetTranRes> createComment(@PathVariable("transactionId") int transactionId, @RequestBody PostCommentReq postCommentReq){
+    public BaseResponse<GetTranRes> createComment(@PathVariable("transactionId") int transactionId, @RequestBody @Valid PostCommentReq postCommentReq){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
             Pageable pageable;
@@ -116,7 +116,7 @@ public class TransanctionController {
     //댓글 수정
     @ResponseBody
     @PatchMapping("search/comment/{transactionId}")
-    public BaseResponse<GetTranRes> modifyComment(@PathVariable("transactionId") int transactionId, @RequestBody Comment comment){
+    public BaseResponse<GetTranRes> modifyComment(@PathVariable("transactionId") int transactionId, @RequestBody @Valid Comment comment){
         try{
             int userIdByJwt = jwtService.getUserIdx();
             int commentId = comment.getId();
