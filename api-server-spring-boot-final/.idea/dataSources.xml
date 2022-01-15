@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/umc</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@cornfarmer-db.cl9arfsl2n7z.ap-northeast-2.rds.amazonaws.com" uuid="ea473cc6-1af1-4ac2-b81a-8170ac1f3b1b">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://cornfarmer-db.cl9arfsl2n7z.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

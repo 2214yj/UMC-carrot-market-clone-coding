@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
@@ -55,7 +57,7 @@ public class MyPageController {
     //회원 프로필 사진 등록, 수정
     @ResponseBody
     @PatchMapping("/{userIdx}")
-    public BaseResponse<String> modifyUserProfile(@PathVariable("userIdx") int userIdx, @RequestBody PatchImageReq patchImageReq){
+    public BaseResponse<String> modifyUserProfile(@PathVariable("userIdx") int userIdx, @RequestBody @Valid PatchImageReq patchImageReq){
         try {
             //jwt에서 idx 추출.
             int userIdxByJwt = jwtService.getUserIdx();
