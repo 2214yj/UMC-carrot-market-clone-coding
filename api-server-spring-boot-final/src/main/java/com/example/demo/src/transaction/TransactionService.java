@@ -94,6 +94,7 @@ public class TransactionService {
         }
     }
 
+    @Transactional
     public GetTranRes deleteComment(int commentId, int transactionId, Pageable pageable) throws BaseException {
         try{
             GetTranRes getTranRes = transactionDao.deleteComment(commentId,transactionId,pageable);
@@ -104,6 +105,7 @@ public class TransactionService {
         }
     }
 
+    @Transactional
     public void likeTransaction(int transactionId, int userIdxByJwt) throws BaseException {
         try{
             int result = transactionDao.likeTransaction(transactionId,userIdxByJwt);
@@ -116,6 +118,7 @@ public class TransactionService {
         }
     }
 
+    @Transactional
     public void likeTransactionAgain(int transactionId, int userIdxByJwt,String status) throws BaseException {
         try{
             int result = transactionDao.likeTransactionAgain(transactionId,userIdxByJwt,status);
