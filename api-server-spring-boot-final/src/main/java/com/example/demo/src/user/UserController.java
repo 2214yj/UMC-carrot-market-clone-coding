@@ -11,6 +11,7 @@ import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -61,7 +62,7 @@ public class UserController {
     // Body
     @ResponseBody
     @PostMapping("/sign-up")    // POST 방식의 요청을 매핑하기 위한 어노테이션
-    public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
+    public BaseResponse<PostUserRes> createUser(@RequestBody @Valid PostUserReq postUserReq) {
         //  @RequestBody란, 클라이언트가 전송하는 HTTP Request Body(우리는 JSON으로 통신하니, 이 경우 body는 JSON)를 자바 객체로 매핑시켜주는 어노테이션
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
         // email에 값이 존재하는지, 빈 값으로 요청하지는 않았는지 검사합니다. 빈값으로 요청했다면 에러 메시지를 보냅니다.
@@ -96,7 +97,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/log-in")
-    public BaseResponse<PostLoginRes> logIn(@RequestBody PostLoginReq postLoginReq) {
+    public BaseResponse<PostLoginRes> logIn(@RequestBody @Valid PostLoginReq postLoginReq) {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
@@ -177,7 +178,7 @@ public class UserController {
      */
     @ResponseBody
     @PatchMapping("/update/{userIdx}")
-    public BaseResponse<String> modifyUserNameAndAddress(@PathVariable("userIdx") int userIdx, @RequestBody User user) {
+    public BaseResponse<String> modifyUserNameAndAddress(@PathVariable("userIdx") int userIdx, @RequestBody @Valid User user) {
         try {
 
             //jwt에서 idx 추출.
