@@ -22,3 +22,11 @@ spring:
     show-sql: true
     generate-ddl: true
 
+
+#transactional annotation이 실행되는지 로그를 통해 확인하기 위해
+logging:
+  level:
+    org:
+      springframework:
+        transaction:
+          interceptor: TRACE

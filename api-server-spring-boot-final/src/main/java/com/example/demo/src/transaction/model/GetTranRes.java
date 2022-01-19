@@ -25,21 +25,16 @@ public class GetTranRes {
     private String userImage;
     private Page<Comment> commentPage;
 
-    public GetTranRes(String title, String content, String item_name, String price, String category, String address,String sell_status, String created_at) {
+    public GetTranRes(String title, String content, String itemName, String price, String category, String address, String sellStatus, String createdAt, String nickname, String userImage) {
         this.title = title;
         this.content = content;
-        this.itemName = item_name;
+        this.itemName = itemName;
         this.price = price;
         this.category = category;
         this.address = address;
-        this.sellStatus = sell_status;
-        this.createdAt = created_at;
-    }
-
-    public GetTranRes(String nickname, String image) {
+        this.sellStatus = sellStatus;
+        this.createdAt = createdAt;
         this.nickname = nickname;
-        this.userImage = image;
+        this.userImage = userImage;
     }
-
-
 }
