@@ -43,19 +43,22 @@ public class TransactionDao {
 
     //transaction 상세 페이지 검색
     public GetTranRes getTransactionDetail(int transactionId){
-
-        String getDetailQuery = "select title,content,item_name,price,category,address,sell_status,created_at from Transaction where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+        String getDetailQuery = "select * from Transaction t " +
+                "join user u on t.user_id = u.user_idx " +
+                "where transaction_id = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
         int getDetailParams = transactionId;
         GetTranRes getTranRes1 = this.jdbcTemplate.queryForObject(getDetailQuery,
                 (rs, rowNum) -> new GetTranRes(
-                        rs.getString("title"),
-                        rs.getString("content"),
-                        rs.getString("item_name"),
-                        rs.getString("price"),
-                        rs.getString("category"),
-                        rs.getString("address"),
-                        rs.getString("sell_status"),
-                        rs.getString("created_at")
+                        rs.getString("t.title"),
+                        rs.getString("t.content"),
+                        rs.getString("t.item_name"),
+                        rs.getString("t.price"),
+                        rs.getString("t.category"),
+                        rs.getString("t.address"),
+                        rs.getString("t.sell_status"),
+                        rs.getString("t.created_at"),
+                        rs.getString("u.nickname"),
+                        rs.getString("u.image")
                 ),
                 getDetailParams);
 
@@ -66,17 +69,7 @@ public class TransactionDao {
                         rs.getString("url")
                 ),
                 getDetailParams));
-        int userId = this.jdbcTemplate.queryForObject("select user_id from Transaction where transaction_id = ?",Integer.class, transactionId);
-        getDetailQuery = "select nickname, image from User where user_idx = ?"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
-        getDetailParams = userId;
-        GetTranRes getTranRes2 = this.jdbcTemplate.queryForObject(getDetailQuery,
-                (rs, rowNum) -> new GetTranRes(
-                        rs.getString("nickname"),
-                        rs.getString("image")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
-                getDetailParams);
-        getTranRes1.setNickname(getTranRes2.getNickname());
-        getTranRes1.setAddress(getTranRes2.getAddress());
-        getTranRes1.setUserImage(getTranRes2.getUserImage());
+
         return getTranRes1;
     }
 
