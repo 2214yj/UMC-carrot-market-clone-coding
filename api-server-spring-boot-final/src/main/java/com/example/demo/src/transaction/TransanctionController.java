@@ -64,7 +64,7 @@ public class TransanctionController {
 
     //좋아요
     @PostMapping("search/{transactionId}/like")
-    public BaseResponse<String> likeTransaction(@PathVariable("transactionId") int transactionId){
+    public BaseResponse<PostLikeRes> likeTransaction(@PathVariable("transactionId") int transactionId){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
             int likeTransactionCount = transactionProvider.likeTransactionCount(transactionId,userIdxByJwt);
@@ -75,8 +75,10 @@ public class TransanctionController {
                 String status = transactionProvider.getlikeTransactionStatus(transactionId,userIdxByJwt);
                 transactionService.likeTransactionAgain(transactionId,userIdxByJwt,status);
             }
-            String result = "좋아요를 눌렀습니다.";
-            return new BaseResponse<>(result);
+            PostLikeRes postLikeRes = new PostLikeRes(transactionId);
+            int likeTotalCount = transactionProvider.likeTransactionTotalCount(transactionId);
+            postLikeRes.setLikeTotalCount(likeTotalCount);
+            return new BaseResponse<>(postLikeRes);
         }catch(BaseException exception){
             exception.printStackTrace();
             return new BaseResponse(exception.getStatus());

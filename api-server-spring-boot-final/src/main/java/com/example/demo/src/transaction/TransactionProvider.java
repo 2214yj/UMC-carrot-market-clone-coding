@@ -162,4 +162,14 @@ public class TransactionProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int likeTransactionTotalCount(int transactionId) throws BaseException {
+        try{
+            int likeTotalCount = transactionDao.likeTransactionCount(transactionId);
+            return likeTotalCount;
+        } catch (Exception exception){
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

@@ -48,8 +48,8 @@ com/example/demo/src/entity/BaseEntity.java
  com.example.demo.src.entity.BaseEntity
 com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
-com/example/demo/src/transaction/model/GetTranRes.java
- com.example.demo.src.transaction.model.GetTranRes
+com/example/demo/src/user/model/User.java
+ com.example.demo.src.user.model.User
 com/example/demo/src/entity/SellStatus.java
  com.example.demo.src.entity.SellStatus
 com/example/demo/utils/AES128.java
@@ -68,8 +68,8 @@ com/example/demo/src/transaction/model/PutTranReq.java
  com.example.demo.src.transaction.model.PutTranReq
 com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
-com/example/demo/src/transaction/TransactionDao.java
- com.example.demo.src.transaction.TransactionDao
+com/example/demo/src/user/UserDao.java
+ com.example.demo.src.user.UserDao
 com/example/demo/src/entity/PostImageEntity.java
  com.example.demo.src.entity.PostImageEntity
 com/example/demo/src/user/UserService.java
@@ -92,15 +92,17 @@ com/example/demo/src/mypage/model/PatchImageReq.java
  com.example.demo.src.mypage.model.PatchImageReq
 com/example/demo/src/mypage/MyPageProvider.java
  com.example.demo.src.mypage.MyPageProvider
-com/example/demo/src/user/model/User.java
- com.example.demo.src.user.model.User
-com/example/demo/src/user/UserDao.java
- com.example.demo.src.user.UserDao
+com/example/demo/src/transaction/model/GetTranRes.java
+ com.example.demo.src.transaction.model.GetTranRes
+com/example/demo/src/transaction/model/PostLikeRes.java
+ com.example.demo.src.transaction.model.PostLikeRes
 com/example/demo/src/MainController.java
  com.example.demo.src.MainController
-com/example/demo/src/transaction/TransactionProvider.java
- com.example.demo.src.transaction.TransactionProvider
 com/example/demo/src/transaction/TransanctionController.java
  com.example.demo.src.transaction.TransanctionController
 com/example/demo/src/transaction/TransactionService.java
  com.example.demo.src.transaction.TransactionService
+com/example/demo/src/transaction/TransactionProvider.java
+ com.example.demo.src.transaction.TransactionProvider
+com/example/demo/src/transaction/TransactionDao.java
+ com.example.demo.src.transaction.TransactionDao

@@ -296,6 +296,11 @@ public class TransactionDao {
                 String.class,likeTransactionStatusParams);
         return (nowStatus.equals("A"))? "D" : "A";
     }
+
+    public int likeTransactionCount(int transactionId) {
+        String query = "select count(*) from transaction_like where transaction_id = ? and status = ?";
+        return this.jdbcTemplate.queryForObject(query,int.class,transactionId,"A");
+    }
 }
 
 
