@@ -100,7 +100,8 @@ public class TransactionDao {
     public Page<GetSearchTranRes> getAllTransactions(Pageable pageable){
         int count = jdbcTemplate.queryForObject("SELECT count(*) FROM Transaction", Integer.class);
         Sort.Order order = !pageable.getSort().isEmpty() ? pageable.getSort().toList().get(0) : Sort.Order.by("transaction_id");
-        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * FROM Transaction ORDER BY " + order.getProperty() + " "
+        List<GetSearchTranRes> getSearchTranResList = jdbcTemplate.query("SELECT * ,(select count(*) from transaction_like l where l.transaction_id = t.transaction_id and l.status = ? ) as likeTotalCount FROM Transaction t " +
+                        "ORDER BY " + order.getProperty() + " "
                         + order.getDirection().name() + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset(),
                 (rs, rowNum) -> new GetSearchTranRes(
                         rs.getInt("transaction_id"),
@@ -110,7 +111,9 @@ public class TransactionDao {
                         rs.getString("rep_img"),
                         rs.getString("sell_status"),
                         rs.getString("created_at"),
-                        rs.getString("address")));
+                        rs.getString("address"),
+                        rs.getInt("likeTotalCount")
+                ),"A");
 
         return new PageImpl<GetSearchTranRes>(getSearchTranResList, pageable, count);
     }
