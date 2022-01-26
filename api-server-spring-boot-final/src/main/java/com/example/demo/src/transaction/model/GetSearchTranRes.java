@@ -1,9 +1,11 @@
 package com.example.demo.src.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 
+@AllArgsConstructor
 public class GetSearchTranRes {
     @JsonProperty
     private int transactionId;
@@ -21,6 +23,8 @@ public class GetSearchTranRes {
     private String createdAt;
     @JsonProperty
     private String address;
+    @JsonProperty
+    private int likeTotalCount;
 
     public GetSearchTranRes(int id, String title, String price, String category, String rep_img, String sell_status, String created_at, String address) {
 

@@ -32,16 +32,16 @@ com/example/demo/src/entity/TransactionImageEntity.java
  com.example.demo.src.entity.TransactionImageEntity
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
-com/example/demo/src/mypage/MyPageController.java
- com.example.demo.src.mypage.MyPageController
+com/example/demo/src/mypage/model/PatchImageReq.java
+ com.example.demo.src.mypage.model.PatchImageReq
 com/example/demo/src/entity/TransactionLikeEntity.java
  com.example.demo.src.entity.TransactionLikeEntity
 com/example/demo/src/transaction/model/PostTranReq.java
  com.example.demo.src.transaction.model.PostTranReq
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
-com/example/demo/src/transaction/model/GetSearchTranRes.java
- com.example.demo.src.transaction.model.GetSearchTranRes
+com/example/demo/src/transaction/model/GetTranRes.java
+ com.example.demo.src.transaction.model.GetTranRes
 com/example/demo/src/entity/Status.java
  com.example.demo.src.entity.Status
 com/example/demo/src/entity/BaseEntity.java
@@ -82,27 +82,27 @@ com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
 com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
-com/example/demo/src/mypage/MyPageService.java
- com.example.demo.src.mypage.MyPageService
-com/example/demo/src/mypage/MyPageDao.java
- com.example.demo.src.mypage.MyPageDao
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
-com/example/demo/src/mypage/model/PatchImageReq.java
- com.example.demo.src.mypage.model.PatchImageReq
-com/example/demo/src/mypage/MyPageProvider.java
- com.example.demo.src.mypage.MyPageProvider
-com/example/demo/src/transaction/model/GetTranRes.java
- com.example.demo.src.transaction.model.GetTranRes
+com/example/demo/src/transaction/model/GetSearchTranRes.java
+ com.example.demo.src.transaction.model.GetSearchTranRes
 com/example/demo/src/transaction/model/PostLikeRes.java
  com.example.demo.src.transaction.model.PostLikeRes
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
+com/example/demo/src/mypage/MyPageProvider.java
+ com.example.demo.src.mypage.MyPageProvider
 com/example/demo/src/MainController.java
  com.example.demo.src.MainController
 com/example/demo/src/transaction/TransanctionController.java
  com.example.demo.src.transaction.TransanctionController
 com/example/demo/src/transaction/TransactionService.java
  com.example.demo.src.transaction.TransactionService
-com/example/demo/src/transaction/TransactionProvider.java
- com.example.demo.src.transaction.TransactionProvider
 com/example/demo/src/transaction/TransactionDao.java
  com.example.demo.src.transaction.TransactionDao
+com/example/demo/src/transaction/TransactionProvider.java
+ com.example.demo.src.transaction.TransactionProvider
+com/example/demo/src/mypage/MyPageService.java
+ com.example.demo.src.mypage.MyPageService
+com/example/demo/src/mypage/MyPageDao.java
+ com.example.demo.src.mypage.MyPageDao
+com/example/demo/src/mypage/MyPageController.java
+ com.example.demo.src.mypage.MyPageController
