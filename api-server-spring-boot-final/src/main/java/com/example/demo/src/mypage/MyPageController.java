@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.Optional;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
@@ -77,16 +79,16 @@ public class MyPageController {
 
     //my transaction 조회
     @ResponseBody
-    @GetMapping("transaction")
-    public BaseResponse<Page<GetSearchTranRes>> getTransactionProfile(@RequestParam(value = "sort", required = false, defaultValue = "desc") String sort){
+    @GetMapping({"transaction","transaction/{page}"})
+    public BaseResponse<Page<GetSearchTranRes>> getTransactionProfile(@PathVariable("page") Optional<Integer> page , @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort){
         try{
             //jwt에서 idx 추출.
             int userIdxByJwt = jwtService.getUserIdx();
             Pageable pageable;
             if(sort.equals("desc"))
-                pageable = PageRequest.of( 0,5,Sort.by("created_at").descending());
+                pageable = PageRequest.of(page.isPresent()? page.get() : 0,5,Sort.by("created_at").descending());
             else
-                pageable = PageRequest.of( 0,5,Sort.by("created_at").ascending());
+                pageable = PageRequest.of(page.isPresent()? page.get() : 0,5,Sort.by("created_at").ascending());
             Page<GetSearchTranRes> getSearchTranResList = myPageProvider.getMyTransactions(userIdxByJwt,pageable);
             return new BaseResponse<>(getSearchTranResList);
         }catch(BaseException exception){
