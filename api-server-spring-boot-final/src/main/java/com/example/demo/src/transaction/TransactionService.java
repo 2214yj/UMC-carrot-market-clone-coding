@@ -28,7 +28,6 @@ public class TransactionService {
             return result;
 
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -41,7 +40,6 @@ public class TransactionService {
                 throw new BaseException(MODIFY_FAIL_SELLSTATUS);
             }
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -54,7 +52,6 @@ public class TransactionService {
                 throw new BaseException(MODIFY_FAIL_SELLSTATUS);
             }
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -67,7 +64,6 @@ public class TransactionService {
                 throw new BaseException(DELETE_FAIL_TRANSACTION);
             }
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -78,7 +74,6 @@ public class TransactionService {
             GetTranRes getTranRes = transactionDao.createComment(userIdxByJwt,transactionId,postCommentReq,pageable);
             return getTranRes;
         }catch(Exception exception){
-            exception.printStackTrace();;
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -89,7 +84,6 @@ public class TransactionService {
             GetTranRes getTranRes = transactionDao.modifyComment(commentId,transactionId,content,pageable);
             return getTranRes;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -100,7 +94,6 @@ public class TransactionService {
             GetTranRes getTranRes = transactionDao.deleteComment(commentId,transactionId,pageable);
             return getTranRes;
         }catch (Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -113,7 +106,6 @@ public class TransactionService {
                 throw new BaseException(ADD_FAIL_TRANSACTIONLIKE);
             }
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -126,7 +118,6 @@ public class TransactionService {
                 throw new BaseException(ADD_FAIL_TRANSACTIONLIKE);
             }
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }

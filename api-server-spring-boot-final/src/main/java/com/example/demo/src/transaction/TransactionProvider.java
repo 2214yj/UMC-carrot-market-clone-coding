@@ -31,7 +31,6 @@ public class TransactionProvider {
             GetTranRes getTranRes = transactionDao.getTransactionDetail(transactionId);
             return getTranRes;
         }catch (Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -42,7 +41,6 @@ public class TransactionProvider {
             GetTranRes getTranRes = transactionDao.getTransactionAndComment(transactionId, pageable);
             return getTranRes;
         }catch (Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -53,7 +51,6 @@ public class TransactionProvider {
             Page<GetSearchTranRes> getSearchTranResList = transactionDao.getAllTransactions(pageable);
             return getSearchTranResList;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -65,7 +62,6 @@ public class TransactionProvider {
             List<GetSearchTranRes> getSearchTranResList = transactionDao.getAllTransactions(userIdx);
             return getSearchTranResList;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -76,7 +72,6 @@ public class TransactionProvider {
             Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchAddress(searchQuery,pageable);
             return getSearchTranResList;
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -87,7 +82,6 @@ public class TransactionProvider {
             Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchCategory(searchQuery,pageable);
             return getSearchTranResList;
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -98,7 +92,6 @@ public class TransactionProvider {
             Page<GetSearchTranRes> getSearchTranResList = transactionDao.getSearchTitle(searchQuery,pageable);
             return getSearchTranResList;
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -108,7 +101,6 @@ public class TransactionProvider {
             int userId = transactionDao.getUserIdx(transactionId);
             return userId;
         } catch (Exception exception) {
-        exception.printStackTrace();
         throw new BaseException(DATABASE_ERROR);
     }
     }
@@ -118,7 +110,6 @@ public class TransactionProvider {
             int userId = transactionDao.getCommentUserIdx(commentId);
             return userId;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -128,7 +119,6 @@ public class TransactionProvider {
             int commentTransactionId = transactionDao.getCommentTransactionId(commentId);
             return commentTransactionId;
         } catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -138,7 +128,6 @@ public class TransactionProvider {
             String commentStatus = transactionDao.getCommentStatus(commentId);
             return commentStatus;
         } catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -148,7 +137,6 @@ public class TransactionProvider {
             int likeTransactionCount = transactionDao.likeTransactionCount(transactionId,userIdxByJwt);
             return likeTransactionCount;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -158,7 +146,6 @@ public class TransactionProvider {
             String result = transactionDao.getLikeTransactionStatus(transactionId,userIdxByJwt);
             return result;
         }catch(Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -168,7 +155,6 @@ public class TransactionProvider {
             int likeTotalCount = transactionDao.likeTransactionCount(transactionId);
             return likeTotalCount;
         } catch (Exception exception){
-            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
